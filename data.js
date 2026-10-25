@@ -3,9 +3,9 @@
    Bütün məkanlar SUPABASE-dən gəlir (DB.shops). STATİK siyahı YOXDUR.
    Bu, çarxın üzərindəki məkanların serverin seçdiyi qalib ilə eyni olmasını təmin edir. */
 
-/* mystery palitrası — tünd fon üzərində parlaq, lakin premium tonlar */
-const COLORS = ["#6d3bff","#a855ff","#c026d3","#ff4d8d","#ff7a45","#ffcf5c",
-                "#3ddcff","#2d9bf0","#7c4dff","#e0479e","#f59e0b","#4dd4ac"];
+/* mystery palitrası — yaşıl / zümrüd & qızılı premium tonlar */
+const COLORS = ["#10b981","#059669","#34d399","#047857","#14b8a6","#2dd4bf",
+                "#0d9488","#10b981","#f59e0b","#fcd34d","#38bdf8","#22c55e"];
 
 /* Kateqoriya siyahısı — açarlar MUTLAQA Supabase `cat` sahəsi ilə eyni olmalıdır
    (spin.js DB.shops(k) çağıranda bu açarı birbaşa ötürür) */

@@ -153,23 +153,23 @@ function shade(hex, amt) {
     /* mərkəz dairəsi — balaca, məkan adlarını örtməsin */
     const hr = big ? 22 : 28;
     const hg = ctx.createRadialGradient(R, R - hr * 0.4, 2, R, R, hr);
-    if (light) { hg.addColorStop(0, "#ffffff"); hg.addColorStop(1, "#f0e8ff"); }
-    else { hg.addColorStop(0, "#2a1550"); hg.addColorStop(1, "#0d0620"); }
+    if (light) { hg.addColorStop(0, "#ffffff"); hg.addColorStop(1, "#ecfdf5"); }
+    else { hg.addColorStop(0, "#064e3b"); hg.addColorStop(1, "#021a13"); }
     ctx.beginPath(); ctx.arc(R, R, hr, 0, 2 * Math.PI); ctx.fillStyle = hg; ctx.fill();
-    ctx.strokeStyle = light ? "#d97706" : "#ffcf5c"; ctx.lineWidth = 3; ctx.stroke();
-    ctx.shadowColor = light ? "rgba(217,119,6,.5)" : "rgba(255,207,92,.9)"; ctx.shadowBlur = 12;
-    ctx.fillStyle = light ? "#b45309" : "#ffcf5c"; ctx.font = `bold ${big ? 16 : 20}px Segoe UI`;
+    ctx.strokeStyle = light ? "#d97706" : "#fcd34d"; ctx.lineWidth = 3; ctx.stroke();
+    ctx.shadowColor = light ? "rgba(217,119,6,.5)" : "rgba(252,211,77,.9)"; ctx.shadowBlur = 12;
+    ctx.fillStyle = light ? "#b45309" : "#fcd34d"; ctx.font = `bold ${big ? 16 : 20}px Segoe UI`;
     ctx.textAlign = "center"; ctx.textBaseline = "middle";
     ctx.fillText("?", R, R + 1);
     ctx.shadowBlur = 0;
     /* OX göstəricisi (yuxarıda, sabit) */
-    ctx.fillStyle = "#ffcf5c";
+    ctx.fillStyle = "#fcd34d";
     ctx.beginPath();
     ctx.moveTo(R, R - cv.width/2 + 2);
     ctx.lineTo(R - 12, R - cv.width/2 + 26);
     ctx.lineTo(R + 12, R - cv.width/2 + 26);
     ctx.closePath(); ctx.fill();
-    ctx.strokeStyle = "#7b2ff7"; ctx.lineWidth = 2; ctx.stroke();
+    ctx.strokeStyle = "#059669"; ctx.lineWidth = 2; ctx.stroke();
   }
 
   if (gate()) hint.textContent = `✦ Bu ay ${subInfo().spinsLeft} fırlatma haqqın qalıb. Nə çıxacaq — bilinmir.`;
