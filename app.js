@@ -88,16 +88,19 @@
 
   var pending = null;
 
-  q("compForm").addEventListener("submit", function (e) {
+  q("compForm").addEventListener("submit", async function (e) {
     e.preventDefault();
     var err = q("cErr");
+    var emailErr = q("cEmailErr");
     err.classList.add("hidden");
+    emailErr.classList.add("hidden");
     var name = q("cName").value.trim();
     var cat = sel.value;
     var addr = q("cAddr").value.trim();
     var sign = q("cSign").value.trim();
     var disc = parseInt(q("cDisc").value, 10);
-    var phone = q("cPhone").value.trim();
+    var phone = (q("cPhonePrefix") ? q("cPhonePrefix").value : "+994") + " " + q("cPhone").value.replace(/\D/g, "");
+    phone = phone.replace(/\s+/g, " ").trim();
     var email = q("cEmail").value.trim().toLowerCase();
     var pass = q("cPass").value;
 
@@ -108,6 +111,17 @@
     if (phone.replace(/\D/g, "").length < 7) { err.textContent = "Əlaqə nömrəsi düzgün deyil."; err.classList.remove("hidden"); return; }
     if (!/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(email)) { err.textContent = "Admin paneli üçün düzgün email daxil edin."; err.classList.remove("hidden"); return; }
     if (pass.length < 6) { err.textContent = "Admin paneli şifrəsi ən azı 6 simvol olmalıdır."; err.classList.remove("hidden"); return; }
+
+    // Email artıq mövcuddurmu? (qeydiyyatdan keçib?)
+    try {
+      var ex = await DB.companyExists(email);
+      if (ex && ex.exists) {
+        emailErr.textContent = I18N.t("addCompany.emailExists");
+        emailErr.classList.remove("hidden");
+        q("cEmail").focus();
+        return;
+      }
+    } catch (e2) { /* şəbəkə xətası — davam et, register zamanı tutular */ }
 
     pending = { name: name, cat: cat, addr: addr, sign: sign, disc: disc, phone: phone, email: email, pass: pass };
     q("contractText").innerHTML = contractHTML(pending);
@@ -123,8 +137,6 @@
   q("contractCancel").addEventListener("click", function () {
     q("contractModal").classList.add("hidden");
   });
-
-  var lastContract = null;
 
   q("signBtn").addEventListener("click", function () {
     if (!q("agreeChk").checked || !pending) return;
@@ -155,13 +167,12 @@
       q("okSub").textContent = "";
       q("okMeta").innerHTML =
         '<div style="font-size:15px;line-height:1.9;color:#fff">' +
-        '✅ Müqavilə uğurla imzalandı və şirkət əlavə edildi.<br>' +
-        '📄 Müqavilə PDF forması emailinizə göndərildi: <b>' + pending.email + '</b>' +
+        '✅ ' + I18N.t("addCompany.okSuccess") + '<br>' +
+        '<b style="color:#ffcf5c">' + pending.email + '</b>' +
         '<div id="mailStatus" style="color:#ffcf5c;margin-top:8px;font-size:13px">📧 Göndərilir…</div>' +
         '</div>';
       q("okModal").classList.remove("hidden");
       q("compForm").reset();
-      renderList();
 
       // 3) Email + PDF (serverdə yaradılır, müştərinin emailinə gedir)
       return fetch("/api/company", {
@@ -177,8 +188,7 @@
       return mr.json().catch(function () { return {}; }).then(function (mj) {
         var ms = q("mailStatus");
         if (mr.ok && mj.ok) {
-          lastContract = Object.assign({}, rec, { pdf: mj.pdf || null });
-          ms.textContent = "✅ Müqavilə PDF forması emailinizə göndərildi.";
+          ms.textContent = "✅ " + I18N.t("addCompany.okEmailSent");
         } else {
           ms.textContent = "⚠️ Müqavilə yaradıldı, amma email göndərilmədi: " + (mj.error || "xəta");
         }
@@ -187,23 +197,6 @@
       var ms = q("mailStatus");
       if (ms) ms.textContent = "⚠️ Email göndərmə xətası: " + err.message;
     });
-  });
-
-  q("dlPdf").addEventListener("click", function () {
-    if (lastContract && lastContract.pdf) {
-      var a = document.createElement("a");
-      a.href = lastContract.pdf;
-      a.download = "misterio-muqavile-" + lastContract.id + ".pdf";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-    } else {
-      alert("PDF hazır deyil (serverdən alınmayıb). Səhifəni yeniləyin və ya emailinizə baxın.");
-    }
-  });
-
-  q("okMore").addEventListener("click", function () {
-    q("okModal").classList.add("hidden");
   });
 
 })();

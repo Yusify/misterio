@@ -42,7 +42,8 @@ async function loadSession() {
   try {
     const u = await DB.me();
     if (u) { CURRENT_USER = u; Session.login(u); }
-    else Session.logout();
+    // DB.me() null qaytardıqda sessiyanı silmərik (keçici xəta və ya token vaxtı ola bilər);
+    // localStorage keşi saxlanılır ki, daxil olmuş istifadəçi index.html-də dashboard-u görsün.
   } catch { /* offlayn → keşdən davam */ }
   return CURRENT_USER;
 }

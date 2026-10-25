@@ -8,10 +8,21 @@
 <script src="analytics.js"></script>
 <script src="i18n.js?v=2"></script>
 <script src="nav.js"></script>
+<script src="lang.js"></script>
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="surprise.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🎁</text></svg>">
 </head>
 <body>
+<!--LOADING-ANIM-START-->
+<div class="page-loading" id="pageLoading">
+  <div class="loading-wheel"></div>
+  <div class="loading-text" data-i18n="common.loading">Yüklənir...</div>
+</div>
+<!--LOADING-ANIM-END-->
+<div id="pageWrap">
+
+
 <header class="hdr">
   <a class="logo" href="index.html">
     <svg class="logo-svg" viewBox="0 0 240 240" width="38" height="38" aria-hidden="true">
@@ -26,7 +37,8 @@
     </svg>
     <span class="logo-txt">Misterio</span>
   </a>
-  <nav class="nav"><a href="pricing.html">Qiymət</a><a href="add-company.html">Şirkət əlavə et</a></nav>
+  <nav class="nav"><a href="pricing.html" data-i18n="nav.pricing">Qiymət</a><a href="add-company.html" data-i18n="nav.addCompany">Şirkət əlavə et</a></nav>
+  <div class="lang-select" aria-label="Dil seçimi"></div>
   <button class="theme-btn" onclick="toggleTheme()" aria-label="Tema">☀️</button>
   <a class="avatar" href="profile.html" title="Profil">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round">
@@ -36,13 +48,25 @@
 
 <main>
   <section class="wrap">
-    <div class="welcome" id="welcome"></div>
-    <!-- ödənişsiz bildiriş (toast) -->
-    <div class="toast-notice hidden" id="freeNotice">
-      <div class="tn-ic">⏳</div>
-      <div class="tn-body">
-        <b id="tnTitle"></b>
-        <div id="tnText"></div>
+    <div class="welcome-bar">
+      <div class="welcome" id="welcome"></div>
+    </div>
+
+    <!-- sürpriz qutu animasiyası (yalnız ilk qeydiyyatdan keçən istifadəçi) -->
+    <div class="surprise hidden" id="surprise">
+      <div class="gift-stage">
+        <div class="gift-box" id="giftBox">
+          <div class="gift-lid"></div>
+          <div class="gift-bow"></div>
+          <div class="gift-body"></div>
+        </div>
+        <div class="ticket hidden" id="ticket">
+          <div class="ticket-top">
+            <span class="ticket-wheel" aria-hidden="true"></span>
+            <span class="ticket-text" data-i18n="spin.ticket">Ödənişsiz 1 bilet qazandınız!</span>
+          </div>
+          <a class="ticket-profile" href="profile.html" id="ticketProfile" data-i18n="common.myProfile">Profilim</a>
+        </div>
       </div>
     </div>
 
@@ -51,11 +75,22 @@
       <div class="bb-ic" id="bbIc">🔒</div>
       <h2 id="bbTitle"></h2>
       <p id="bbText"></p>
-      <a class="btn big" id="bbBtn" href="pricing.html">Abunə ol — 9.90 AZN/ay</a>
-      <a class="btn ghost" id="bbProfileBtn" href="profile.html" style="display:none">Profilim</a>
+      <a class="btn big" id="bbBtn" href="pricing.html" data-i18n="spin.subCta">Abunə ol — 9.90 AZN/ay</a>
+      <a class="btn ghost" id="bbProfileBtn" href="profile.html" style="display:none" data-i18n="common.coupMy">Profilim</a>
     </div>
 
-    <div id="spinArea">
+    <!-- Çarx hazırlanır (profil → Çarxı fırlat sonrası: kateqoriyaların YUXARISINDA, ayrı sətr) -->
+    <div class="preparing hidden" id="preparing">
+      <div class="prep-card">
+        <div class="prep-wheel-wrap">
+          <canvas id="prepWheel" width="520" height="520"></canvas>
+        </div>
+        <div class="prep-title" data-i18n="spin.prepTitle">Çarx Hazırlanır</div>
+        <div class="prep-text" data-i18n="spin.prepText">Ən sevdiyiniz məkanlar əlavə edilir.<br>Tezliklə aktiv olacaq</div>
+      </div>
+    </div>
+
+    <div id="spinArea" class="hidden">
       <h2 class="sec-title" data-i18n="spin.cat">1. Kateqoriya seç</h2>
       <div id="cats" class="cats"></div>
     </div>
@@ -71,31 +106,32 @@
     </div>
   </section>
 </main>
+</div><!-- /pageWrap -->
 
 <div class="modal hidden" id="modal">
-  <div class="modal-card">
-    <div class="confetti">🎉</div>
-    <h3>Təbriklər!</h3>
-    <p class="win" id="winTxt"></p>
-    <p class="sub" id="winCat"></p>
-    <p class="sub">Kupon "Kuponlarım" bölməsinə əlavə olundu.</p>
-    <div class="row">
-      <a class="btn ghost" href="profile.html">Kuponlarım</a>
-      <button class="btn" id="closeModal">Bağla</button>
-    </div>
+<div class="modal-card">
+  <div class="confetti">🎉</div>
+  <h3 data-i18n="spin.congrats">Təbriklər!</h3>
+  <p class="win" id="winTxt"></p>
+  <p class="sub" id="winCat"></p>
+  <p class="sub" data-i18n="spin.couponAdded">Kupon "Kuponlarım" bölməsinə əlavə olundu.</p>
+  <div class="row">
+    <a class="btn ghost" href="profile.html" data-i18n="common.coupMy">Kuponlarım</a>
+    <button class="btn" id="closeModal" data-i18n="spin.close">Bağla</button>
   </div>
+</div>
 </div>
 
 <footer class="ftr">
   <div class="ftr-logo">Misterio</div>
   <div>info@misterio.az · +994 70 562 12 69</div>
-  <div class="small">Bütün hüquqlar qorunur © 2026 Misterio</div>
+  <div class="small" data-i18n="footer.copy">Bütün hüquqlar qorunur © 2026 Misterio</div>
 </footer>
 <script src="db.js"></script>
 <script src="auth.js"></script>
 <script src="data.js"></script>
 <script src="spin.js"></script>
-<footer style="text-align:center;padding:24px;color:var(--soft);font-size:13px">
+<footer style="text-align:center;padding:24px;color:#9f7aea;font-size:13px">
 </footer>
 </body>
 </html>

@@ -2,13 +2,15 @@
    MISTERIO — Şirkət Admin Paneli (dashboard / iş üslubu)
    Əsas style.css-dəki rəng dəyişənlərini istifadə edir.
    ============================================================ */
+/* spesifikliyi artır: admin.css sonradan yüklənir, .gate-screen / .admin-shell /
+   .custom-range-un display qaydası .hidden-i üstələməsin deyə ayrıca qeyd edirik */
 .gate-screen.hidden,
 .admin-shell.hidden,
 .custom-range.hidden{display:none}
 .admin-tag{
   margin-left:auto;margin-right:14px;font-size:13px;font-weight:700;
-  color:var(--gold);background:rgba(252,211,77,.10);
-  border:1px solid rgba(252,211,77,.35);padding:6px 14px;border-radius:20px;
+  color:var(--gold);background:rgba(255,207,92,.10);
+  border:1px solid rgba(255,207,92,.35);padding:6px 14px;border-radius:20px;
 }
 .admin-shell{display:flex;min-height:calc(100vh - 64px);position:relative;z-index:1}
 #logoutBtn{margin-left:0}
@@ -16,13 +18,13 @@
 /* ---------- LOGIN ---------- */
 .admin-login{max-width:480px;margin:50px auto;text-align:center}
 .al-card{padding:34px 28px;text-align:left}
-.demo-box{margin-top:22px;background:rgba(16,185,129,.08);
-  border:1px dashed rgba(16,185,129,.45);border-radius:14px;padding:14px}
+.demo-box{margin-top:22px;background:rgba(168,85,255,.08);
+  border:1px dashed rgba(168,85,255,.45);border-radius:14px;padding:14px}
 .demo-title{font-size:13px;font-weight:700;color:var(--soft);margin-bottom:10px}
 .demo-row{display:flex;justify-content:space-between;align-items:center;gap:10px;
   padding:9px 12px;border-radius:10px;cursor:pointer;transition:.2s;
-  background:rgba(4,22,16,.4);margin-bottom:8px;font-size:13.5px}
-.demo-row:hover{background:rgba(16,185,129,.18);border-color:rgba(52,211,153,.6)}
+  background:rgba(12,6,26,.4);margin-bottom:8px;font-size:13.5px}
+.demo-row:hover{background:rgba(168,85,255,.18);border-color:rgba(200,160,255,.6)}
 .demo-fill{color:var(--gold);font-size:12px;font-weight:700;white-space:nowrap}
 .demo-row b{color:var(--ink)}
 
@@ -41,19 +43,19 @@
 .side-av{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;
   font-size:20px;font-weight:900;color:#fff;
   background:linear-gradient(135deg,var(--neon-2),var(--pink));
-  box-shadow:0 0 22px rgba(16,185,129,.55)}
+  box-shadow:0 0 22px rgba(168,85,255,.55)}
 .side-name{font-weight:800;font-size:15px}
 .side-mail{font-size:12px;color:var(--soft)}
 .side-nav{display:flex;flex-direction:column;gap:8px;margin-top:6px}
 .sn-btn{text-align:left;cursor:pointer;border:0;color:var(--soft);
   background:transparent;padding:13px 16px;border-radius:12px;font-size:15px;font-weight:600;
   border:1px solid transparent;transition:.2s}
-.sn-btn:hover{color:var(--ink);background:rgba(16,185,129,.12)}
+.sn-btn:hover{color:var(--ink);background:rgba(168,85,255,.12)}
 .sn-btn.active{color:#fff;background:linear-gradient(100deg,var(--neon-2),var(--neon) 55%,var(--pink));
-  box-shadow:0 8px 22px rgba(16,185,129,.4)}
+  box-shadow:0 8px 22px rgba(140,60,255,.4)}
 .side-link{margin-top:auto;font-size:13px;color:var(--soft);text-align:center;
   padding:10px;border-radius:10px;border:1px solid var(--line)}
-.side-link:hover{color:var(--gold);border-color:rgba(252,211,77,.4)}
+.side-link:hover{color:var(--gold);border-color:rgba(255,207,92,.4)}
 
 /* ---------- MAIN ---------- */
 .admin-main{flex:1;padding:26px 30px;max-width:1100px;width:100%}
@@ -65,24 +67,24 @@
 .ap-note p{color:var(--soft);font-size:14px;line-height:1.6}
 
 /* ---------- DASHBOARD ---------- */
-.total-card{background:linear-gradient(150deg,rgba(12,48,36,.92),rgba(6,28,20,.94));
-  border:1px solid rgba(252,211,77,.45);border-radius:24px;padding:30px 32px;
-  box-shadow:0 20px 50px rgba(0,0,0,.5),0 0 60px rgba(16,185,129,.18)}
+.total-card{background:linear-gradient(150deg,rgba(48,26,92,.92),rgba(22,12,44,.94));
+  border:1px solid rgba(255,207,92,.45);border-radius:24px;padding:30px 32px;
+  box-shadow:0 20px 50px rgba(0,0,0,.5),0 0 60px rgba(168,85,255,.18)}
 .tc-label{font-size:14px;color:var(--soft);font-weight:600;letter-spacing:.3px}
 .tc-val{font-size:54px;font-weight:900;line-height:1.1;margin-top:6px;
-  background:linear-gradient(92deg,#fcd34d,#34d399 65%,#10b981);
+  background:linear-gradient(92deg,#ffcf5c,#ff4d8d 65%,#a855ff);
   -webkit-background-clip:text;background-clip:text;color:transparent;
-  filter:drop-shadow(0 0 22px rgba(252,211,77,.3))}
+  filter:drop-shadow(0 0 22px rgba(255,207,92,.3))}
 .tc-val small{font-size:22px;-webkit-text-fill-color:var(--gold);color:var(--gold)}
 .tc-sub{margin-top:8px;color:var(--soft);font-size:13.5px}
 
 .mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px}
 .mini-card{background:var(--panel);border:1px solid var(--line);border-radius:18px;
   padding:20px 18px;box-shadow:0 12px 30px rgba(0,0,0,.4);transition:.25s}
-.mini-card:hover{transform:translateY(-4px);border-color:rgba(52,211,153,.5)}
+.mini-card:hover{transform:translateY(-4px);border-color:rgba(200,160,255,.5)}
 .mc-lbl{font-size:13px;color:var(--soft);font-weight:600}
 .mc-val{font-size:30px;font-weight:900;margin:8px 0 2px;
-  background:linear-gradient(92deg,#fcd34d,#34d399);
+  background:linear-gradient(92deg,#ffcf5c,#ff4d8d);
   -webkit-background-clip:text;background-clip:text;color:transparent}
 .mc-sub{font-size:12px;color:var(--soft)}
 
@@ -93,11 +95,11 @@
   padding:20px;text-align:center;box-shadow:0 12px 30px rgba(0,0,0,.4)}
 .scan-frame{position:relative;width:230px;height:230px;margin:0 auto 16px;
   border-radius:18px;overflow:hidden;background:
-    repeating-linear-gradient(45deg,rgba(16,185,129,.05) 0 12px,rgba(16,185,129,.10) 12px 24px);
-  border:1px dashed rgba(16,185,129,.4)}
+    repeating-linear-gradient(45deg,rgba(168,85,255,.05) 0 12px,rgba(168,85,255,.10) 12px 24px);
+  border:1px dashed rgba(168,85,255,.4)}
 .scan-line{position:absolute;left:0;right:0;height:3px;top:0;
   background:linear-gradient(90deg,transparent,var(--gold),transparent);
-  box-shadow:0 0 16px rgba(252,211,77,.9);animation:scanMove 2.2s ease-in-out infinite}
+  box-shadow:0 0 16px rgba(255,207,92,.9);animation:scanMove 2.2s ease-in-out infinite}
 @keyframes scanMove{0%{top:8%}50%{top:90%}100%{top:8%}}
 .scan-corners i{position:absolute;width:26px;height:26px;border:3px solid var(--gold);opacity:.9}
 .scan-corners i:nth-child(1){top:8px;left:8px;border-right:0;border-bottom:0}
@@ -115,15 +117,15 @@
 .coupon-check{animation:fadeUp .3s}
 .cc-head{display:flex;align-items:center;gap:14px;margin-bottom:14px}
 .cc-ic{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-size:26px;
-  background:linear-gradient(135deg,var(--neon-2),var(--pink));box-shadow:0 0 22px rgba(16,185,129,.5)}
+  background:linear-gradient(135deg,var(--neon-2),var(--pink));box-shadow:0 0 22px rgba(168,85,255,.5)}
 .cc-code{font-family:monospace;font-size:18px;font-weight:800;color:var(--gold);letter-spacing:1px}
 .cc-shop{font-size:13px;color:var(--soft)}
 .cc-disc{font-size:15px;margin-bottom:16px}
 .cc-disc b{color:var(--neon);font-size:17px}
 .otf label{color:var(--ink-2)}
 .cc-final{display:flex;flex-direction:column;gap:4px;margin:6px 0 16px;
-  padding:14px 16px;border-radius:12px;background:rgba(252,211,77,.10);
-  border:1px solid rgba(252,211,77,.35)}
+  padding:14px 16px;border-radius:12px;background:rgba(255,207,92,.10);
+  border:1px solid rgba(255,207,92,.35)}
 .cc-final span{font-size:13px;color:var(--soft)}
 .cc-final b{font-size:24px;font-weight:900;color:var(--gold)}
 .empty-check{text-align:center;padding:40px 20px}
@@ -144,10 +146,10 @@
   overflow:hidden;box-shadow:0 12px 30px rgba(0,0,0,.4)}
 .orders-table{width:100%;border-collapse:collapse;font-size:14px}
 .orders-table thead th{text-align:left;padding:14px 18px;font-size:12px;letter-spacing:.4px;
-  text-transform:uppercase;color:var(--soft);background:rgba(16,185,129,.10);
+  text-transform:uppercase;color:var(--soft);background:rgba(168,85,255,.10);
   border-bottom:1px solid var(--line)}
-.orders-table tbody td{padding:13px 18px;border-bottom:1px solid rgba(52,211,153,.12);color:var(--ink-2)}
-.orders-table tbody tr:hover{background:rgba(16,185,129,.07)}
+.orders-table tbody td{padding:13px 18px;border-bottom:1px solid rgba(190,155,255,.12);color:var(--ink-2)}
+.orders-table tbody tr:hover{background:rgba(168,85,255,.07)}
 .orders-table tbody tr:last-child td{border-bottom:0}
 .mono{font-family:monospace;color:var(--gold);letter-spacing:.5px;font-weight:600}
 .bold{font-weight:800;color:var(--ok)}
@@ -157,7 +159,7 @@
 .flash{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);
   background:linear-gradient(100deg,var(--neon-2),var(--neon));color:#fff;
   padding:13px 26px;border-radius:30px;font-weight:700;font-size:14px;z-index:120;
-  box-shadow:0 10px 30px rgba(16,185,129,.5);animation:fadeUp .3s}
+  box-shadow:0 10px 30px rgba(140,60,255,.5);animation:fadeUp .3s}
 
 /* ---------- RESPONSIVE ---------- */
 @media(max-width:860px){

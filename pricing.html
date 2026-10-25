@@ -8,10 +8,20 @@
 <script src="analytics.js"></script>
 <script src="i18n.js?v=2"></script>
 <script src="nav.js"></script>
+<script src="lang.js"></script>
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🎁</text></svg>">
 </head>
 <body>
+<!--LOADING-ANIM-START-->
+<div class="page-loading" id="pageLoading">
+  <div class="loading-wheel"></div>
+  <div class="loading-text" data-i18n="common.loading">Yüklənir...</div>
+</div>
+<!--LOADING-ANIM-END-->
+<div id="pageWrap">
+
+
 <header class="hdr">
   <a class="logo" href="index.html">
     <svg class="logo-svg" viewBox="0 0 240 240" width="38" height="38" aria-hidden="true">
@@ -26,7 +36,8 @@
     </svg>
     <span class="logo-txt">Misterio</span>
   </a>
-  <nav class="nav"><a href="pricing.html" class="on">Qiymət</a><a href="add-company.html">Şirkət əlavə et</a></nav>
+  <nav class="nav"><a href="pricing.html" class="on" data-i18n="nav.pricing">Qiymət</a><a href="add-company.html" data-i18n="nav.addCompany">Şirkət əlavə et</a></nav>
+  <div class="lang-select" aria-label="Dil seçimi"></div>
   <button class="theme-btn" onclick="toggleTheme()" aria-label="Tema">☀️</button>
   <a class="avatar" href="profile.html" title="Profil">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round">
@@ -38,8 +49,7 @@
   <section class="hero">
     <div class="badge" id="welcomeBadge" data-i18n="pricing.newBadge">🔮 Yeni gələnlər üçün fürsət</div>
     <h1 data-i18n="pricing.heroTitle">Hər ay <span class="grad">3 sürpriz şans</span></h1>
-    <p class="lead" data-i18n="pricing.heroLead">İndi qoşul, ilk fırlatmanı elə bu gün et. Çarxın arxasında Bakının ən yaxşı restoran, kafe,
-       kurs və co-working məkanları gizlənir — hansı sənə düşəcək, bilinmir.</p>
+    <p class="lead" data-i18n="pricing.heroLead">İndi qoşul, çarxın arxasında Bakının ən yaxşı məkanları gizlənir.</p>
   </section>
 
   <section class="wrap">
@@ -63,13 +73,11 @@
 
       <div class="price-side">
         <div class="card info"><h3 data-i18n="pricing.whyTitle">🔮 Niyə Misterio?</h3>
-          <p data-i18n="pricing.whyDesc">Adi endirim saytlarında nə alacağını əvvəlcədən bilirsən. Burada isə hər fırlatma bir sürprizdir —
-             və çox vaxt gözlədiyindən daha yaxşı çıxır.</p></div>
+          <p data-i18n="pricing.whyDesc">Nə qazanacağını əvvəlcədən bilmirsən. Çox vaxt gözlədiyindən yaxşı çıxır.</p></div>
         <div class="card info"><h3 data-i18n="pricing.couponTitle">💸 Bir kupon abunəliyi ödəyir</h3>
-          <p data-i18n="pricing.couponDesc">Orta hesabla bir restoran endirimi 15-30 AZN qənaət deməkdir. Ayda 3 kupon — abunəlik özünü ilk gün çıxarır.</p></div>
+          <p data-i18n="pricing.couponDesc">Bir restoran endirimi orta hesabla 15-30 AZN qənaətdir. Ayda 3 kupon abunəliyi tez çıxarır.</p></div>
         <div class="card info"><h3 data-i18n="pricing.cancelTitle">🔁 Ləğvetmə şərtləri</h3>
-          <p data-i18n="pricing.cancelDesc">Abunəlik hər ay avtomatik yenilənir. Profil səhifəsindən bir kliklə ləğv edə bilərsən —
-             ləğv etdikdə cari dövrün sonuna qədər fırlatmaların qalır, sonrakı ay ödəniş alınmır.</p></div>
+          <p data-i18n="pricing.cancelDesc">Abunəlik avtomatik yenilənir. İstədiyin vaxt profildən ləğv edə bilərsən.</p></div>
       </div>
     </div>
   </section>
@@ -98,22 +106,23 @@
     </div>
   </section>
 </main>
+</div><!-- /pageWrap -->
 
 <div class="modal hidden" id="payModal">
   <div class="modal-card">
     <div class="confetti">💳</div>
     <h3 id="payTitle">Abunəliyi aktivləşdir</h3>
     <p class="win" id="payAmount">9.90 AZN</p>
-    <p class="sub" id="paySub">Aylıq təkrarlanan ödəniş. Nümunə axın — real ödəniş alınmır.</p>
+    <p class="sub" id="paySub">Aylıq təkrarlanan ödəniş. Kart nömrənizi daxil edin və təsdiqləyin — abunə aktiv olacaq.</p>
     <div class="pay-fake">
-      <div class="pay-row"><span>Kart nömrəsi</span><input id="payCard" inputmode="numeric" maxlength="19" placeholder="**** **** **** 4242" style="background:rgba(0,0,0,.25);border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:6px 10px;width:160px;text-align:right;font-family:monospace"></div>
-      <div class="pay-row"><span>Məbləğ</span><b id="payAmountRow">9.90 AZN</b></div>
-      <div class="pay-row"><span>Dövr</span><b id="payPeriod">Aylıq</b></div>
-      <div class="pay-row"><span>Hesab</span><b id="payAcc">—</b></div>
+      <div class="pay-row"><span data-i18n="pay.cardNum">Kart nömrəsi</span><input id="payCard" inputmode="numeric" maxlength="19" placeholder="**** **** **** 4242" style="background:rgba(0,0,0,.25);border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:6px 10px;width:160px;text-align:right;font-family:monospace"></div>
+      <div class="pay-row"><span data-i18n="pay.amount">Məbləğ</span><b id="payAmountRow">9.90 AZN</b></div>
+      <div class="pay-row"><span data-i18n="pay.period">Dövr</span><b id="payPeriod">Aylıq</b></div>
+      <div class="pay-row"><span data-i18n="pay.account">Hesab</span><b id="payAcc">—</b></div>
     </div>
     <div class="row">
-      <button class="btn ghost" id="payCancel">İmtina</button>
-      <button class="btn" id="payGo">Ödənişi təsdiqlə</button>
+      <button class="btn ghost" id="payCancel" data-i18n="pay.cancel">İmtina</button>
+      <button class="btn" id="payGo" data-i18n="pay.confirm">Ödənişi təsdiqlə</button>
     </div>
   </div>
 </div>
@@ -134,13 +143,19 @@
 <footer class="ftr">
   <div class="ftr-logo">Misterio</div>
   <div>info@misterio.az · +994 70 562 12 69</div>
-  <div class="small">Bütün hüquqlar qorunur © 2026 Misterio</div>
+  <div class="small" data-i18n="footer.copy">Bütün hüquqlar qorunur © 2026 Misterio</div>
 </footer>
 <script src="db.js"></script>
 <script src="auth.js"></script>
 <script>
 const q=id=>document.getElementById(id);
 let mode="sub";
+
+/* MƏCƏRANI QOŞ REJİMİ (müvəqqəti): true olanda pricing-dəki "İndi qoşul" və "Əlavə fırlatma al"
+   button-ları birbaşa spin.html (Çarx Hazırlanır) səhifəsinə yönləndirir.
+   Sən "macəranı qoş" deyəndə bu dəyər true olaraq qalır; "əvvəlki vəziyyətə qaytar" deyəndə
+   false edib ödəniş modalına qaytaracam. */
+window.MACERA_MODE = true;
 
 function render(){
   const u=Session.user();
@@ -157,12 +172,17 @@ function render(){
 }
 MA.qiymetBaxdi();
 (function(){ try{ updatePrices(); I18N.apply(); }catch(e){ console.warn(e); } })();
-(async()=>{ try{ await loadSession(); render(); }catch(e){ console.warn(e); } })();
+(async()=>{ try{ await loadSession(); render(); /*LOADING-ANIM-START*/ if (window.hidePageLoading) window.hidePageLoading(); /*LOADING-ANIM-END*/ }catch(e){ console.warn(e); } })();
 
 function updatePrices(){
-  q("subNum").textContent="9.90";
-  q("subCur").textContent="AZN";
-  q("extraPrice").textContent="4.90 AZN";
+  const sub = I18N.price("sub");
+  const extra = I18N.price("extra");
+  if(q("subNum")) q("subNum").textContent = sub.amount;
+  if(q("subCur")) q("subCur").textContent = sub.cur;
+  if(q("extraPrice")) q("extraPrice").textContent = extra.text;
+  // pay modal məbləğləri də yenilə
+  if(q("payAmount")) q("payAmount").textContent = sub.text;
+  if(q("payAmountRow")) q("payAmountRow").textContent = sub.text;
 }
 function openPay(m){
   mode=m;
@@ -170,21 +190,30 @@ function openPay(m){
   MA.odenisAcdi(m);
   q("payTitle").textContent = I18N.t(m==="sub" ? "pay.title.sub" : "pay.title.extra");
   q("payPeriod").textContent = I18N.t(m==="sub" ? "pay.period.sub" : "pay.period.extra");
-  const amt=(m==="sub"?"9.90":"4.90")+" AZN";
+  const amt = (m==="sub" ? I18N.price("sub").text : I18N.price("extra").text);
   q("payAmount").textContent = amt;
   q("payAmountRow").textContent = amt;
-  q("paySub").textContent = m==="sub"
-    ? "Aylıq təkrarlanan ödəniş. Kart nömrənizi daxil edin — ödəniş təsdiqləndikdə abunə aktiv olur."
-    : "Birdəfəlik ödəniş, hesabınıza +1 fırlatma əlavə olunur.";
+  q("paySub").textContent = m==="sub" ? I18N.t("pay.descSub") : I18N.t("pay.descExtra");
+  const cardEl = q("payCard"); if(cardEl) cardEl.placeholder = I18N.t("pay.placeholder");
   q("payModal").classList.remove("hidden");
 }
-q("subBtn").onclick=()=>openPay("sub");
-q("extraBtn").onclick=()=>openPay("extra");
+q("subBtn").onclick=()=>{
+  // MƏCƏRANI QOŞ REJİMİ (müvəqqəti): button birbaşa Çarx Hazırlanır səhifəsinə yönləndirir
+  if (window.MACERA_MODE) { location.href="spin.html"; return; }
+  openPay("sub");
+};
+q("extraBtn").onclick=()=>{
+  // MƏCƏRANI QOŞ REJİMİ (müvəqqəti): button birbaşa Çarx Hazırlanır səhifəsinə yönləndirir
+  if (window.MACERA_MODE) { location.href="spin.html"; return; }
+  openPay("extra");
+};
+// Dil dəyişəndə modal açıqdırsa, məzmunu yenilə
+document.addEventListener("langchange", ()=>{ if(!q("payModal").classList.contains("hidden")) openPay(mode); });
 q("payCancel").onclick=()=>q("payModal").classList.add("hidden");
 q("payGo").onclick=async()=>{
   const card = (q("payCard").value || "").trim();
   if(mode==="sub" && card.replace(/\s+/g,"").length < 12){
-    alert("Abunə üçün kart nömrəsini daxil edin.");
+    alert(I18N.t("pay.cardRequired") || "Abunə üçün kart nömrəsini daxil edin.");
     return;
   }
   q("payModal").classList.add("hidden");
@@ -206,8 +235,9 @@ q("payGo").onclick=async()=>{
 };
 if(new URLSearchParams(location.search).get("welcome"))
   q("welcomeBadge").textContent="✅ Hesabın təsdiqləndi — indi abunə ol";
+window.LANG_onChange=function(){ try{ updatePrices(); }catch(e){} };
 </script>
-<footer style="text-align:center;padding:24px;color:var(--soft);font-size:13px">
+<footer style="text-align:center;padding:24px;color:#9f7aea;font-size:13px">
 </footer>
 </body>
 </html>

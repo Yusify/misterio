@@ -8,10 +8,20 @@
 <script src="analytics.js"></script>
 <script src="i18n.js?v=2"></script>
 <script src="nav.js"></script>
+<script src="lang.js"></script>
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🎁</text></svg>">
 </head>
 <body>
+<!--LOADING-ANIM-START-->
+<div class="page-loading" id="pageLoading">
+  <div class="loading-wheel"></div>
+  <div class="loading-text" data-i18n="common.loading">Yüklənir...</div>
+</div>
+<!--LOADING-ANIM-END-->
+<div id="pageWrap">
+
+<div id="profileRoot" class="profile-root">
 <header class="hdr">
   <a class="logo" href="index.html">
     <svg class="logo-svg" viewBox="0 0 240 240" width="38" height="38" aria-hidden="true">
@@ -26,7 +36,8 @@
     </svg>
     <span class="logo-txt">Misterio</span>
   </a>
-  <nav class="nav"><a href="pricing.html">Qiymət</a><a href="add-company.html">Şirkət əlavə et</a></nav>
+  <nav class="nav"><a href="pricing.html" data-i18n="nav.pricing">Qiymət</a><a href="add-company.html" data-i18n="nav.addCompany">Şirkət əlavə et</a></nav>
+  <div class="lang-select" aria-label="Dil seçimi"></div>
   <button class="theme-btn" onclick="toggleTheme()" aria-label="Tema">☀️</button>
   <a class="avatar" href="profile.html" title="Profil">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round">
@@ -35,26 +46,15 @@
 </header>
 
 <main>
-  <!-- ödənişsiz free şans bildirişi -->
-  <section class="wrap">
-    <div class="toast-notice hidden" id="freeNotice">
-      <div class="tn-ic">🎁</div>
-      <div class="tn-body">
-        <b id="tnTitle"></b>
-        <div id="tnText"></div>
-      </div>
-    </div>
-  </section>
-
   <section class="wrap">
     <div class="prof-head card">
       <div class="pf-av" id="pfAv">M</div>
       <div>
         <div class="pf-name" id="pfName"></div>
         <div class="pf-mail" id="pfMail"></div>
-        <div class="pf-badges"><span class="pill ok">✓ Email təsdiqlənib</span><span class="pill" id="pfSpin"></span></div>
+        <div class="pf-badges"><span class="pill ok" data-i18n="profile.emailVerified">✓ Email təsdiqlənib</span><span class="pill" id="pfSpin"></span></div>
       </div>
-      <button class="btn ghost" id="logoutBtn">Çıxış</button>
+      <button class="btn ghost" id="logoutBtn" data-i18n="profile.logout">Çıxış</button>
     </div>
   </section>
 
@@ -64,23 +64,25 @@
   </section>
 
   <section class="wrap">
-    <h2 class="sec-title">Profil məlumatları</h2>
+    <h2 class="sec-title" data-i18n="profile.details">Profil məlumatları</h2>
     <form class="card form" id="profForm">
-      <label>Ad Soyad<input id="pName" placeholder="Adınız"></label>
-      <label>Email<input id="pEmail" type="email" disabled></label>
-      <label>Telefon<input id="pPhone" placeholder="+994 __ ___ __ __"></label>
-      <label>Şəhər<input id="pCity" placeholder="Bakı"></label>
-      <button class="btn" type="submit">Yadda saxla</button>
-      <span class="saved hidden" id="saved">✓ Yadda saxlanıldı</span>
+      <label data-i18n="auth.name">Ad Soyad<input id="pName" placeholder="Adınız"></label>
+      <label data-i18n="auth.email">Email<input id="pEmail" type="email" disabled></label>
+      <label data-i18n="auth.phone">Telefon<input id="pPhone" placeholder="+994 __ ___ __ __"></label>
+      <label data-i18n="addCompany.cAddr">Şəhər<input id="pCity" placeholder="Bakı"></label>
+      <button class="btn" type="submit" data-i18n="common.save">Yadda saxla</button>
+      <span class="saved hidden" id="saved" data-i18n="common.saved">✓ Yadda saxlanıldı</span>
     </form>
   </section>
 
   <section class="wrap">
-    <h2 class="sec-title">Kuponlarım</h2>
-    <p class="hint" style="margin:-8px 0 16px">Detalları və kupon kodunu görmək üçün "Bax" düyməsinə bas.</p>
+    <h2 class="sec-title" data-i18n="common.coupMy">Kuponlarım</h2>
+    <p class="hint" style="margin:-8px 0 16px" data-i18n="common.info">Detalları və kupon kodunu görmək üçün "Bax" düyməsinə bas.</p>
     <div id="coupons" class="coupons"></div>
   </section>
 </main>
+</div><!-- /profileRoot -->
+</div><!-- /pageWrap -->
 
 <div class="modal hidden" id="cModal">
   <div class="modal-card">
@@ -101,12 +103,12 @@
 <footer class="ftr">
   <div class="ftr-logo">Misterio</div>
   <div>info@misterio.az · +994 70 562 12 69</div>
-  <div class="small">Bütün hüquqlar qorunur © 2026 Misterio</div>
+  <div class="small" data-i18n="footer.copy">Bütün hüquqlar qorunur © 2026 Misterio</div>
 </footer>
 <script src="db.js"></script>
 <script src="auth.js"></script>
 <script src="profile.js"></script>
-<footer style="text-align:center;padding:24px;color:var(--soft);font-size:13px">
+<footer style="text-align:center;padding:24px;color:#9f7aea;font-size:13px">
 </footer>
 </body>
 </html>

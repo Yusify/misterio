@@ -1,7 +1,41 @@
 /* Misterio — profil, abunəlik və kuponlar */
 (async function(){
-  let user = await requireAuth();
-  if(!user) return;
+  // Dil dəyişəndə profil mətnlərini + formu yenilə (async gözləmədən asılı olmayaraq)
+  function refreshLang(){
+    try {
+      if (typeof I18N === "undefined") return;
+      I18N.apply();
+      if (typeof head === "function") head();
+      if (typeof renderSub === "function") renderSub();
+      if (typeof fillForm === "function") fillForm();
+      if (typeof render === "function") render(); // kuponlar (boş mesaj da daxil)
+    } catch(e){ console.warn("refreshLang:", e); }
+  }
+  window.LANG_onChange = refreshLang;
+  document.addEventListener("langchange", () => refreshLang());
+
+  /*LOADDING-ANIM-START*/
+  // profil content-i əvvəlcədən gizlə (redirect və ya login gözlənilir)
+  const pr0 = document.getElementById("profileRoot");
+  if (pr0) pr0.style.display = "none";
+  /*LOADING-ANIM-END*/
+
+  let user = null;
+  try {
+    user = await requireAuth();
+  } catch (e) {
+    console.error("requireAuth xətası:", e);
+    // Xəta olsa da profili göstər (NaN olmayan istifadəçi varsa)
+    user = (typeof Session !== "undefined" && Session.user && Session.user()) || null;
+  }
+  if(!user) return;   // requireAuth login olmayanı auth.html-ə redirect edir → overlay orada görünəcək
+  
+  /* yalnız login təsdiqləndi və profil content-i göstəriləcək ki, overlay-i gizlət */
+  /*LOADING-ANIM-START*/
+  const pr = document.getElementById("profileRoot");
+  if (pr) pr.style.display = "";
+  if (window.hidePageLoading) window.hidePageLoading();
+  /*LOADING-ANIM-END*/
   const q=id=>document.getElementById(id);
   let COUPONS = [];
 
@@ -23,17 +57,7 @@
     q("pfAv").textContent=initial(user.name||user.email);
     q("pfName").textContent=user.name||"—";
     q("pfMail").textContent=user.email;
-    q("pfSpin").textContent = s.active ? `🎡 ${s.spinsLeft} fırlatma qalıb` : "🔒 Abunəlik deaktiv";
-
-    /* ---- ödənişsiz (free) şansı varsa profildə göstər + fırlat düyməsi ---- */
-    const fn = q("freeNotice");
-    if (s.isFreePending) {
-      fn.querySelector("#tnTitle").textContent = "🎁 1 dəfə ödənişsiz çarx fırlatma şansın var!";
-      fn.querySelector("#tnText").innerHTML = 'Hesabında <b>1 pulsuz fırlatma haqqı</b> var. Aşağıdakı düymə ilə çarxı fırlat və endirim qazan.';
-      fn.classList.remove("hidden");
-    } else {
-      fn.classList.add("hidden");
-    }
+    q("pfSpin").textContent = s.active ? `🎡 ${s.spinsLeft} ${I18N.t("user.spins")}` : "🔒 " + I18N.t("profile.inactive");
   }
 
   function renderSub(){
@@ -45,15 +69,17 @@
       box.innerHTML=`
         <div class="sub-row">
           <div>
-            <div class="sub-state off">Free şans</div>
-            <p class="sub">Hesabında <b>1 pulsuz fırlatma haqqı</b> var. Çarxı fırlat düyməsinə bas — çarx hazırlanır bildirişi çıxacaq.</p>
+            <div class="sub-state off">${I18N.t("profile.free")}</div>
+            <p class="sub">${I18N.t("profile.freeText")}</p>
           </div>
-          <button class="btn" id="freeSpinBtn">🔮 Çarxı fırlat</button>
+          <div class="sub-actions">
+            <button class="btn" id="freeSpinBtn">${I18N.t("profile.freeSpin")}</button>
+            <a class="btn ghost" href="pricing.html">${I18N.t("profile.monthly")}</a>
+          </div>
         </div>`;
       const fb=q("freeSpinBtn");
       if(fb) fb.onclick=()=>{
         MA.firlatma("free");
-        // spin.html-ə yönləndir — orda "Çarx hazırlanır" bildirişi çıxır
         location.href="spin.html";
       };
       return;
@@ -62,27 +88,29 @@
     if(!s.active){
       box.innerHTML=`
         <div class="sub-row">
-          <div><div class="sub-state off">Deaktiv</div>
-          <p class="sub">Çarxı fırlatmaq üçün aylıq abunəliyi aktivləşdirin — 9.90 AZN, ayda 3 fırlatma.</p></div>
-          <a class="btn" href="pricing.html">Abunə ol</a>
+          <div><div class="sub-state off">${I18N.t("profile.deact")}</div>
+          <p class="sub">${I18N.t("profile.deactText")}</p></div>
+          <div class="sub-actions">
+            <a class="btn" href="pricing.html">${I18N.t("profile.monthly")}</a>
+          </div>
         </div>`;
       return;
     }
     box.innerHTML=`
       <div class="sub-row">
         <div>
-          <div class="sub-state on">Aktiv</div>
+          <div class="sub-state on">${I18N.t("profile.active")}</div>
           <div class="sub-grid">
-            <div><span>Plan</span><b>Misterio Aylıq · 9.90 AZN</b></div>
-            <div><span>Qalan fırlatma</span><b>${s.spinsLeft} / 3</b></div>
-            <div><span>Növbəti yenilənmə</span><b>${s.renewText}</b></div>
+            <div><span>${I18N.t("profile.plan")}</span><b>Misterio Aylıq · ${I18N.price("sub").text}</b></div>
+            <div><span>${I18N.t("profile.spinsLeft")}</span><b>${s.spinsLeft} / 3</b></div>
+            <div><span>${I18N.t("profile.nextRenew")}</span><b>${s.renewText}</b></div>
           </div>
-          ${s.canSpin?"":'<p class="warn">⚠️ Bu ayki fırlatma haqqın bitib.</p>'}
+          ${s.canSpin?"":'<p class="warn">'+I18N.t("profile.warn")+'</p>'}
         </div>
         <div class="sub-actions">
-          ${s.canSpin?'<a class="btn" href="spin.html">Çarxı fırlat 🔮</a>'
-                     :'<a class="btn" href="pricing.html">Əlavə fırlatma al</a>'}
-          <button class="btn ghost" id="cancelSub">Abunəliyi ləğv et</button>
+          ${s.canSpin?`<a class="btn" href="spin.html">${I18N.t("profile.freeSpin")} 🔮</a>`
+                     :`<a class="btn" href="pricing.html">${I18N.t("profile.extraSpin")}</a>`}
+          <button class="btn ghost" id="cancelSub">${I18N.t("profile.cancelSub")}</button>
         </div>
       </div>`;
     const cb=q("cancelSub");
@@ -95,10 +123,14 @@
 
   head(); renderSub();
 
-  q("pName").value=user.name||"";
-  q("pEmail").value=user.email;
-  q("pPhone").value=user.phone||"";
-  q("pCity").value=user.city||"";
+  function fillForm(){
+    const u = Session.user();
+    q("pName").value = u.name || "";
+    q("pEmail").value = u.email;
+    q("pPhone").value = u.phone || "";
+    q("pCity").value = u.city || "";
+  }
+  fillForm();
 
   q("profForm").onsubmit=async e=>{
     e.preventDefault();
@@ -137,7 +169,7 @@
     user=Session.user();
     const list=COUPONS;
     if(!list.length){
-      box.innerHTML='<div class="empty">🔮 Hələ kuponun yoxdur. <a class="link" href="spin.html">Çarxı fırlat</a> və ilk kuponunu qazan.</div>';
+      box.innerHTML='<div class="empty">🔮 ' + I18N.t('profile.noCoupons') + '</div>';
       return;
     }
     box.innerHTML="";

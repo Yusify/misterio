@@ -48,6 +48,7 @@ const DB = {
 
   /* şirkət admin */
   async companyRegister(c){ return apiCall("/company", { method: "POST", body: { action: "register", ...c } }); },
+  async companyExists(email){ return apiCall("/company", { method: "POST", body: { action: "exists", email } }); },
   async companyLogin(e, p){ return apiCall("/company", { method: "POST", body: { action: "login", email: e, password: p } }); },
   async companyMe()       { const r = await apiCall("/company", { method: "POST", body: { action: "me" } }); return r.company; },
   async companyLogout()   { return apiCall("/company", { method: "POST", body: { action: "logout" } }); },

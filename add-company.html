@@ -8,11 +8,12 @@
 <script src="analytics.js"></script>
 <script src="i18n.js?v=2"></script>
 <script src="nav.js"></script>
+<script src="lang.js"></script>
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🎁</text></svg>">
 </head>
 <body>
-<header class="hdr">
+<div id="pageWrap"><header class="hdr">
   <a class="logo" href="index.html">
     <svg class="logo-svg" viewBox="0 0 240 240" width="38" height="38" aria-hidden="true">
       <circle cx="120" cy="120" r="118" fill="#ffffff"/>
@@ -26,7 +27,8 @@
     </svg>
     <span class="logo-txt">Misterio</span>
   </a>
-  <nav class="nav"><a href="pricing.html">Qiymət</a><a href="add-company.html" class="on">Şirkət əlavə et</a></nav>
+  <nav class="nav"><a href="pricing.html" data-i18n="nav.pricing">Qiymət</a><a href="add-company.html" class="on" data-i18n="nav.addCompany">Şirkət əlavə et</a></nav>
+  <div class="lang-select" aria-label="Dil seçimi"></div>
   <button class="theme-btn" onclick="toggleTheme()" aria-label="Tema">☀️</button>
   <a class="avatar" href="profile.html" title="Profil">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round">
@@ -36,38 +38,47 @@
 
 <main>
   <section class="hero">
-    <div class="badge">🤝 Tərəfdaş ol</div>
-    <h1>Şirkətini <span class="grad">çarxa əlavə et</span></h1>
-    <p class="lead">Məkanını Misterio çarxına əlavə et — istifadəçilər sənin endirimini qazanıb birbaşa qapından girsin. Qeydiyyat zamanı onlayn müqavilə avtomatik imzalanır.</p>
+    <div class="badge" data-i18n="addCompany.partner">🤝 Tərəfdaş ol</div>
+    <h1><span data-i18n="addCompany.h1a">Şirkətini</span> <span class="grad" data-i18n="addCompany.h1b">çarxa əlavə et</span></h1>
+    <p class="lead" data-i18n="addCompany.lead">Məkanını Misterio çarxına əlavə et — istifadəçilər sənin endirimini qazanıb birbaşa qapından girsin. Qeydiyyat zamanı onlayn müqavilə avtomatik imzalanır.</p>
   </section>
 
   <section class="wrap">
     <div class="add-grid">
       <form class="card form" id="compForm">
-        <h3 class="sec-title">Şirkət məlumatları</h3>
-        <label>Şirkət / restoran adı *
+        <h3 class="sec-title" data-i18n="addCompany.formTitle">Şirkət məlumatları</h3>
+        <label data-i18n="addCompany.cName">Şirkət / restoran adı *
           <input id="cName" required maxlength="28" placeholder="məs. Dolma House"></label>
-        <label>Kateqoriya *
+        <label data-i18n="addCompany.cCat">Kateqoriya *
           <select id="cCat" required></select></label>
-        <label>Ünvan *
+        <label data-i18n="addCompany.cAddr">Ünvan *
           <input id="cAddr" required maxlength="120" placeholder="məs. Bakı ş., Nizami küç. 12"></label>
-        <label>Tərəfdaşın adı və soyadı (imza üçün) *
+        <label data-i18n="addCompany.cSign">Tərəfdaşın adı və soyadı (imza üçün) *
           <input id="cSign" required maxlength="60" placeholder="məs. Əli Məmmədov"></label>
-        <label>Endirim faizi (%) *
+        <label data-i18n="addCompany.cDisc">Endirim faizi (%) *
           <input id="cDisc" type="number" min="5" max="90" required placeholder="məs. 20"></label>
-        <label>Əlaqə nömrəsi *
-          <input id="cPhone" required placeholder="+994 __ ___ __ __"></label>
-        <label>Admin paneli üçün email *
+        <label data-i18n="addCompany.cPhone">Əlaqə nömrəsi *
+          <div class="phone-wrap">
+            <select id="cPhonePrefix" class="phone-prefix" aria-label="Ölkə kodu"></select>
+            <input id="cPhone" required placeholder="__ ___ __ __" inputmode="tel">
+          </div>
+        </label>
+        <label data-i18n="addCompany.cEmail">Admin paneli üçün email *
           <input id="cEmail" type="email" required placeholder="restoran@mail.az"></label>
-        <label>Admin paneli şifrəsi *
+        <div class="err hidden" id="cEmailErr"></div>
+        <label data-i18n="addCompany.cPass">Admin paneli şifrəsi *
           <input id="cPass" type="password" required minlength="8" placeholder="ən azı 8 simvol (hərf+rəqəm)"></label>
         <div class="err hidden" id="cErr"></div>
-        <button class="btn" type="submit">Davam et → Müqavilə</button>
+        <button class="btn" type="submit" data-i18n="addCompany.submit">Davam et → Müqavilə</button>
       </form>
 
       <div class="side-col">
-        <div class="card info"><h3>ℹ️ Necə işləyir?</h3>
-          <p>1) Məlumatları doldur → 2) Onlayn müqaviləni oxu və "razıyam" de → 3) Sistem müqaviləni imzalayır, PDF yaradır və şirkəti çarxa əlavə edir. Sənə əlavə olaraq heç nə etmək lazım deyil.</p></div>
+        <div class="card info"><h3 data-i18n="addCompany.howTitle">ℹ️ Necə işləyir?</h3>
+          <p data-i18n="addCompany.howText" style="white-space:pre-line">1) Məlumatları doldur
+2) Onlayn müqaviləni oxu və "razıyam" de
+3) Sistem müqaviləni imzalayır, PDF yaradır və şirkəti çarxa əlavə edir.
+
+Sənə əlavə olaraq heç nə etmək lazım deyil.</p></div>
       </div>
     </div>
   </section>
@@ -77,17 +88,17 @@
 <div class="modal hidden" id="contractModal">
   <div class="modal-card" style="max-width:560px">
     <div class="sec-ic" style="text-align:center">📝</div>
-    <h3>Misterio Tərəfdaşlıq Müqaviləsi</h3>
-    <p class="sub" style="text-align:center">Hüquqi şəxs və ya Fiziki şəxs üçün tərəfdaşlıq şərtləri</p>
+    <h3 data-i18n="addCompany.contractTitle">Misterio Tərəfdaşlıq Müqaviləsi</h3>
+    <p class="sub" style="text-align:center" data-i18n="addCompany.contractSub">Hüquqi şəxs və ya Fiziki şəxs üçün tərəfdaşlıq şərtləri</p>
     <div id="contractText" class="contract-text"></div>
     <label class="contract-check">
       <input type="checkbox" id="agreeChk">
-      <span>Mən yuxarıdakı müqaviləni oxudum, başa düşdüm və şərtlərlə <b>razıyam</b>.</span>
+      <span data-i18n="addCompany.agree">Mən yuxarıdakı müqaviləni oxudum, başa düşdüm və şərtlərlə <b>razıyam</b>.</span>
     </label>
     <div class="err hidden" id="contractErr"></div>
     <div class="row" style="margin-top:18px">
-      <button class="btn ghost" id="contractCancel" type="button">İmtina</button>
-      <button class="btn" id="signBtn" type="button" disabled>✍️ Oxudum, razıyam — İmzala</button>
+      <button class="btn ghost" id="contractCancel" type="button" data-i18n="addCompany.contractCancel">İmtina</button>
+      <button class="btn" id="signBtn" type="button" disabled data-i18n="addCompany.sign">✍️ Oxudum, razıyam — İmzala</button>
     </div>
   </div>
 </div>
@@ -96,14 +107,12 @@
 <div class="modal hidden" id="okModal">
   <div class="modal-card">
     <div class="confetti">✅</div>
-    <h3>Şirkət əlavə olundu və müqavilə imzalandı!</h3>
+    <h3 data-i18n="addCompany.okTitle">Şirkət əlavə olundu və müqavilə imzalandı!</h3>
     <p class="win" id="okTxt"></p>
     <p class="sub" id="okSub"></p>
     <div class="contract-meta" id="okMeta"></div>
     <div class="row">
-      <button class="btn ghost" id="okMore">Daha bir şirkət</button>
-      <button class="btn ghost" id="dlPdf">📄 Müqavilə PDF</button>
-      <a class="btn" href="spin.html">Çarxda gör 🎡</a>
+      <a class="btn" href="admin.html" data-i18n="addCompany.okAdminBtn">Admin Panelə keç ⚙️</a>
     </div>
   </div>
 </div>
@@ -111,8 +120,29 @@
 <footer class="ftr">
   <div class="ftr-logo">Misterio</div>
   <div>info@misterio.az · +994 70 562 12 69</div>
-  <div class="small">Bütün hüquqlar qorunur © 2026 Misterio</div>
+  <div class="small" data-i18n="footer.copy">Bütün hüquqlar qorunur © 2026 Misterio</div>
 </footer>
+</div><!-- /pageWrap -->
+<script>
+  (function(){
+    function fillPrefix(sel){
+      if(!sel) return; sel.innerHTML='';
+      var lang = (window.I18N && I18N.lang) || 'az';
+      (window.I18N ? I18N.PHONE_PREFIXES : []).forEach(function(p){
+        var o = document.createElement('option');
+        o.value = p.code;
+        o.textContent = p.flag + ' ' + p.code;
+        sel.appendChild(o);
+      });
+      sel.value = '+994';
+    }
+    document.addEventListener('DOMContentLoaded', function(){
+      fillPrefix(document.getElementById('cPhonePrefix'));
+    });
+    // dil dəyişəndə yenilə
+    if(window.I18N){ var _set=I18N.setLang; I18N.setLang=function(c){var r=_set.apply(I18N,arguments);fillPrefix(document.getElementById('cPhonePrefix'));return r;}; }
+  })();
+</script>
 <script src="db.js"></script>
 <script src="auth.js"></script>
 <script src="data.js"></script>
