@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Şirkət Admin Paneli · Misterio</title>
+<script src="theme.js"></script>
+<script src="analytics.js"></script>
+<script src="i18n.js?v=2"></script>
+<script src="nav.js"></script>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="admin.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🎁</text></svg>">
+</head>
+<body>
+<header class="hdr">
+  <a class="logo" href="index.html">
+    <svg class="logo-svg" viewBox="0 0 240 240" width="38" height="38" aria-hidden="true">
+      <circle cx="120" cy="120" r="118" fill="#ffffff"/>
+      <circle cx="120" cy="120" r="118" fill="none" stroke="#e9d5ff" stroke-width="2"/>
+      <g fill="none" stroke="#2e1065">
+        <circle cx="120" cy="120" r="110" stroke-width="2.4"/>
+        <circle cx="120" cy="120" r="102" stroke-width="1.1"/>
+        <g stroke-width="1.1" opacity="0.5"><polygon points="120,54 154,131 86,131"/><polygon points="120,186 86,109 154,109"/></g>
+      </g>
+      <text x="120" y="130" fill="#2e1065" font-family="Georgia,serif" font-weight="700" font-size="30" text-anchor="middle">Misterio</text>
+    </svg>
+    <span class="logo-txt">Misterio</span>
+  </a>
+  <span class="admin-tag">⚙️ Şirkət Paneli</span>
+  <button class="theme-btn" onclick="toggleTheme()" aria-label="Tema">☀️</button>
+  <button class="btn ghost" id="logoutBtn">Çıxış</button>
+</header>
+
+<!-- GİRİŞ YOXDURSA -->
+<div class="gate-screen" id="gateScreen">
+  <div class="gate-card card">
+    <div class="sec-ic">🔐</div>
+    <h2>Admin panelinə daxil olunmalıdır</h2>
+    <p class="sub">Bu bölmə yalnız şirkət hesabları üçündür.</p>
+    <a class="btn big" href="admin-login.html">Daxil ol</a>
+  </div>
+</div>
+
+<!-- PANEL -->
+<div class="admin-shell hidden" id="adminShell">
+  <aside class="admin-side">
+    <div class="side-co">
+      <div class="side-av" id="sideAv">M</div>
+      <div>
+        <div class="side-name" id="sideName">—</div>
+        <div class="side-mail" id="sideMail">—</div>
+      </div>
+    </div>
+    <nav class="side-nav">
+      <button class="sn-btn active" data-tab="dash">📊 Mədaxil</button>
+      <button class="sn-btn" data-tab="scan">🔎 Kupon skan et</button>
+      <button class="sn-btn" data-tab="orders">🧾 Təsdiqlənən sifarişlər</button>
+    </nav>
+    <a class="side-link" href="index.html">← Əsas sayt</a>
+  </aside>
+
+  <main class="admin-main">
+    <!-- ============ DASHBOARD ============ -->
+    <section class="tab-pane active" id="tab-dash">
+      <h1 class="ap-title">Mədaxil / Dashboard</h1>
+      <div class="total-card">
+        <div class="tc-label">Ümumi qazanılan məbləğ</div>
+        <div class="tc-val"><span id="totalEarned">0.00</span> <small>AZN</small></div>
+        <div class="tc-sub" id="totalCount">0 təsdiqlənmiş sifariş</div>
+      </div>
+      <div class="mini-grid">
+        <div class="mini-card"><div class="mc-lbl">📅 Bu gün</div><div class="mc-val" id="todayEarned">0.00</div><div class="mc-sub">AZN</div></div>
+        <div class="mini-card"><div class="mc-lbl">🗓️ Bu həftə</div><div class="mc-val" id="weekEarned">0.00</div><div class="mc-sub">AZN</div></div>
+        <div class="mini-card"><div class="mc-lbl">📆 Bu ay</div><div class="mc-val" id="monthEarned">0.00</div><div class="mc-sub">AZN</div></div>
+      </div>
+      <div class="card info ap-note">
+        <h3>ℹ️ Qeyd</h3>
+        <p>Məbləğlər şirkətinin təsdiqlədiyi sifarişlərin <b>endirimdən sonrakı yekun məbləği</b> üzrə hesablanır. Bütün məlumatlar brauzerinizdə (localStorage) saxlanılır.</p>
+      </div>
+    </section>
+
+    <!-- ============ SCAN ============ -->
+    <section class="tab-pane" id="tab-scan">
+      <h1 class="ap-title">Kupon kodu skan et</h1>
+      <div class="scan-layout">
+        <div class="scan-left">
+          <div class="scanner">
+            <div class="scan-frame">
+              <div class="scan-line"></div>
+              <div class="scan-corners"><i></i><i></i><i></i><i></i></div>
+              <div class="scan-hint">📷 QR / Kupon kamerası<br><small>(vizual interfeys — demo)</small></div>
+            </div>
+            <button class="btn ghost" id="simScan">📸 Skan et (nümunə)</button>
+          </div>
+          <div class="manual">
+            <label class="manual-lbl">və ya kodu əl ilə daxil et</label>
+            <div class="manual-row">
+              <input id="manualCode" placeholder="MIST-XXXXXX-12" autocomplete="off">
+              <button class="btn" id="loadCode">Yüklə</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="scan-right">
+          <div class="card coupon-check hidden" id="couponCheck">
+            <div class="cc-head">
+              <div class="cc-ic">🎟️</div>
+              <div>
+                <div class="cc-code" id="ccCode">—</div>
+                <div class="cc-shop" id="ccShop">—</div>
+              </div>
+            </div>
+            <div class="cc-disc">Endirim: <b id="ccDisc">—</b></div>
+            <form id="orderForm" class="form otf">
+              <label>Ümumi sifariş məbləği (AZN)
+                <input id="orderTotal" type="number" min="0" step="0.01" required placeholder="məs. 50.00"></label>
+              <label>Endirim faizi (avtomatik)
+                <input id="discPct" type="number" disabled></label>
+              <div class="cc-final">
+                <span>Yekun məbləğ (endirimdən sonra):</span>
+                <b id="finalAmt">0.00 AZN</b>
+              </div>
+              <button class="btn big full" type="submit">✅ Təsdiqlə və əlavə et</button>
+            </form>
+          </div>
+          <div class="card empty-check" id="emptyCheck">
+            <div class="sec-ic">🔎</div>
+            <p class="sub">Kupon kodunu skan et və ya daxil et — sifariş məbləğini daxil edib təsdiqlə.</p>
+          </div>
+          <div class="err hidden" id="scanErr"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ORDERS ============ -->
+    <section class="tab-pane" id="tab-orders">
+      <h1 class="ap-title">Təsdiqlənən sifarişlər</h1>
+      <div class="orders-top">
+        <div class="filter-box">
+          <label>Filtr:
+            <select id="rangeSel">
+              <option value="all">Bütün dövr</option>
+              <option value="today">Bu gün</option>
+              <option value="week">Bu həftə</option>
+              <option value="month">Bu ay</option>
+              <option value="custom">Tarix aralığı…</option>
+            </select>
+          </label>
+          <div class="custom-range hidden" id="customRange">
+            <input type="date" id="fromD">
+            <span>→</span>
+            <input type="date" id="toD">
+          </div>
+        </div>
+        <div class="period-sum">
+          Seçilmiş dövr üzrə cəmi: <b id="periodSum">0.00 AZN</b>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="orders-table">
+          <thead>
+            <tr>
+              <th>Tarix</th>
+              <th>Kupon kodu</th>
+              <th>Əsl məbləğ</th>
+              <th>End. %</th>
+              <th>Yekun</th>
+            </tr>
+          </thead>
+          <tbody id="ordersBody"></tbody>
+        </table>
+        <div class="empty-orders hidden" id="emptyOrders">Hələ təsdiqlənmiş sifariş yoxdur.</div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer class="ftr">
+  <div class="ftr-logo">Misterio</div>
+  <div>info@misterio.az · +994 70 562 12 69</div>
+  <div class="small">Bütün hüquqlar qorunur © 2026 Misterio</div>
+</footer>
+
+<script src="db.js"></script>
+<script src="admin.js"></script>
+<script>
+const q=id=>document.getElementById(id);
+const errEl=q("scanErr");
+function showErr(m){ errEl.textContent=m; errEl.classList.remove("hidden"); }
+function hideErr(){ errEl.classList.add("hidden"); }
+
+/* ---- session qoruma (cookie-based) ---- */
+(async () => {
+  const u = await adminUser();
+  if (!u) {
+    q("gateScreen").classList.remove("hidden");
+    q("adminShell").classList.add("hidden");
+    return;
+  }
+  q("gateScreen").classList.add("hidden");
+  q("adminShell").classList.remove("hidden");
+  q("sideName").textContent = u.name || u.email;
+  q("sideMail").textContent = u.email;
+  q("sideAv").textContent = (u.name || u.email || "M").trim().charAt(0).toUpperCase();
+  await loadOrders(); renderDashboard(); renderOrders();
+})();
+
+q("logoutBtn").onclick = async () => { await adminLogout(); location.href = "admin-login.html"; };
+
+/* ---- tab nav ---- */
+document.querySelectorAll(".sn-btn").forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll(".sn-btn").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll(".tab-pane").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+    q("tab-"+b.dataset.tab).classList.add("active");
+    if(b.dataset.tab==="orders") renderOrders();
+  };
+});
+
+/* ---- skan: nümunə + əl ilə ---- */
+const SAMPLE_CODES=["MIST-X7Q2K-24","MIST-AB91C-15","MIST-ZP38M-30","MIST-LK55N-20","MIST-RT22B-10"];
+q("simScan").onclick=async()=>{
+  hideErr();
+  showErr("Skan simulyasiyası üçün istifadəçinin qazandığı real kupon kodunu daxil edin (profil → kuponlarım).");
+};
+q("loadCode").onclick=()=>{
+  const v=q("manualCode").value.trim().toUpperCase();
+  if(!v){ showErr("Kod boş ola bilməz."); return; }
+  loadCoupon(v);
+};
+
+async function loadCoupon(code){
+  hideErr();
+  const c=await lookupCoupon(code);
+  if(!c){ showErr("Kupon tapılmadı və ya artıq istifadə olunub: "+code); return; }
+  q("emptyCheck").classList.add("hidden");
+  q("couponCheck").classList.remove("hidden");
+  q("ccCode").textContent=c.code;
+  q("ccShop").textContent=c.shop+" · "+c.cat;
+  q("ccDisc").innerHTML="Endirim: <b>"+c.disc+"%</b>";
+  q("discPct").value=c.disc;
+  q("orderTotal").value="";
+  q("finalAmt").textContent="0.00 AZN";
+}
+
+q("orderTotal").oninput=()=>{
+  const t=parseFloat(q("orderTotal").value)||0;
+  const d=parseFloat(q("discPct").value)||0;
+  q("finalAmt").textContent=(t*(1-d/100)).toFixed(2)+" AZN";
+};
+
+q("orderForm").onsubmit=async e=>{
+  e.preventDefault();
+  const total=parseFloat(q("orderTotal").value)||0;
+  const d=parseFloat(q("discPct").value)||0;
+  if(total<=0){ showErr("Məbləğ düzgün deyil."); return; }
+  const code=q("ccCode").textContent;
+  const r=await addOrder(code,total,d);
+  if(!r.ok){ showErr(r.error||"Bu kupon artıq istifadə olunub və ya tapılmadı."); return; }
+  MA.sifarisTesdiq(total, d);
+  q("couponCheck").classList.add("hidden");
+  q("emptyCheck").classList.remove("hidden");
+  q("manualCode").value="";
+  renderDashboard();
+  if(document.querySelector(".sn-btn.active").dataset.tab==="orders") renderOrders();
+  flash("✅ Sifariş əlavə olundu");
+};
+
+/* ---- filtr ---- */
+q("rangeSel").onchange=()=>{
+  q("customRange").classList.toggle("hidden", q("rangeSel").value!=="custom");
+  renderOrders();
+};
+q("fromD").onchange=renderOrders;
+q("toD").onchange=renderOrders;
+
+/* kiçik bildiriş */
+function flash(msg){
+  const f=document.createElement("div");
+  f.className="flash";
+  f.textContent=msg;
+  document.body.appendChild(f);
+  setTimeout(()=>f.remove(),2200);
+}
+</script>
+<footer style="text-align:center;padding:24px;color:#9f7aea;font-size:13px">
+</footer>
+</body>
+</html>

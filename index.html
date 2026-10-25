@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Misterio — Sürpriz endirim kuponları</title>
+<script src="theme.js"></script>
+<script src="analytics.js"></script>
+<script src="i18n.js?v=2"></script>
+<script src="nav.js"></script>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🎁</text></svg>">
+</head>
+<body>
+<header class="hdr">
+  <a class="logo" href="index.html">
+    <svg class="logo-svg" viewBox="0 0 240 240" width="38" height="38" aria-hidden="true">
+      <circle cx="120" cy="120" r="118" fill="#ffffff"/>
+      <circle cx="120" cy="120" r="118" fill="none" stroke="#e9d5ff" stroke-width="2"/>
+      <g fill="none" stroke="#2e1065">
+        <circle cx="120" cy="120" r="110" stroke-width="2.4"/>
+        <circle cx="120" cy="120" r="102" stroke-width="1.1"/>
+        <g stroke-width="1.1" opacity="0.5"><polygon points="120,54 154,131 86,131"/><polygon points="120,186 86,109 154,109"/></g>
+      </g>
+      <text x="120" y="130" fill="#2e1065" font-family="Georgia,serif" font-weight="700" font-size="30" text-anchor="middle">Misterio</text>
+    </svg>
+    <span class="logo-txt">Misterio</span>
+  </a>
+  <nav class="nav">
+    <a href="pricing.html">Qiymət</a>
+    <a href="add-company.html">Şirkət əlavə et</a>
+  </nav>
+  <button class="theme-btn" onclick="toggleTheme()" aria-label="Tema">☀️</button>
+  <a class="avatar" href="profile.html" title="Profil">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round">
+      <circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+  </a>
+</header>
+
+<main>
+  <!-- QONAQ üçün hero -->
+  <section class="hero" id="heroGuest">
+    <div class="badge" data-i18n="hero.badge">🔮 Sürpriz endirim platforması</div>
+    <h1><span data-i18n="hero.title1">Bu gün səni</span> <span class="grad" data-i18n="hero.title2">nə gözləyir?</span></h1>
+    <p class="lead" data-i18n="hero.lead">Çarxın arxasında nə gizlənir — bilmirsən. Bakının onlarla məkanından biri, gözlənilməz bir endirim.
+       Ayda 3 fırlatma — cəmi 9.90 AZN.</p>
+    <div class="row">
+      <a class="btn big" href="pricing.html" data-i18n="hero.cta">Çarxı fırlat 🔮</a>
+      <a class="btn ghost big" id="signupBtn" href="auth.html?tab=signup" data-i18n="hero.signup">Hesab yarat</a>
+    </div>
+    <p class="hint" data-i18n="hero.hint">Çarxı fırlatmaq üçün hesab və aktiv abunəlik tələb olunur.</p>
+  </section>
+
+  <!-- İSTİFADƏÇİ üçün hero -->
+  <section class="hero hidden" id="heroUser">
+    <div class="badge" id="uBadge" data-i18n="user.badge">✦ Xoş gəldin</div>
+    <h1 id="uName" data-i18n="user.name">İstifadəçi</h1>
+    <div class="stat-grid">
+      <div class="stat"><div class="s-ic">🎡</div><div class="s-val" id="sSpins">0</div><div class="s-lbl" data-i18n="user.spins">Qalan fırlatma</div></div>
+      <div class="stat"><div class="s-ic" id="sSubIc">🔒</div><div class="s-val" id="sSub">Deaktiv</div><div class="s-lbl" data-i18n="user.sub">Abunəlik statusu</div></div>
+      <div class="stat"><div class="s-ic">📅</div><div class="s-val small-val" id="sRenew">—</div><div class="s-lbl" data-i18n="user.renew">Növbəti yenilənmə</div></div>
+    </div>
+    <div class="row" id="uActions"></div>
+    <p class="hint" id="uHint"></p>
+  </section>
+
+  <!-- 3 izahat bloku (yalnız qonaq) -->
+  <section class="wrap" id="infoBlocks">
+    <div class="info-grid">
+      <div class="card info"><h3 data-i18n="info.spinsTitle">🔮 Ayda 3 fırlatma</h3><p data-i18n="info.spinsDesc">Hər ay 3 dəfə çarxı fırlada bilərsən. Nə çıxacağını əvvəlcədən heç kim bilmir.</p></div>
+      <div class="card info"><h3 data-i18n="info.priceTitle">💳 9.90 AZN / ay</h3><p data-i18n="info.priceDesc">Aylıq təkrarlanan abunəlik. Free trial yoxdur — qoşulduğun gün ilk fırlatmanı edə bilərsən.</p></div>
+      <div class="card info"><h3 data-i18n="info.autoTitle">✨ Avtomatik yenilənmə</h3><p data-i18n="info.autoDesc">3 fırlatma bitəndə növbəti ay hesabın avtomatik yenilənir. İstədiyin vaxt ləğv edə bilərsən.</p></div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <h2 class="sec-title" data-i18n="how.title">Necə işləyir?</h2>
+    <div class="steps">
+      <div class="step"><div class="num">1</div><div class="ic">👤</div><h3 data-i18n="step1.title">Hesab yarat</h3>
+        <p data-i18n="step1.desc">Email ilə qeydiyyatdan keç və poçtuna gələn 6 rəqəmli kodla hesabını təsdiqlə.</p></div>
+      <div class="step"><div class="num">2</div><div class="ic">💳</div><h3 data-i18n="step2.title">Abunə ol</h3>
+        <p data-i18n="step2.desc">9.90 AZN/ay ödə və ayda 3 fırlatma hüququ qazan.</p></div>
+      <div class="step"><div class="num">3</div><div class="ic">🔮</div><h3 data-i18n="step3.title">Çarxı fırlat</h3>
+        <p data-i18n="step3.desc">Kateqoriya seç (və ya "Hamısı") — çarx təsadüfi dayanır. Nəticəni əvvəlcədən heç kim bilmir.</p></div>
+      <div class="step"><div class="num">4</div><div class="ic">🎟️</div><h3 data-i18n="step4.title">Kuponu istifadə et</h3>
+        <p data-i18n="step4.desc">Kupon "Kuponlarım"a düşür. Kassada kodu göstər — hər kupon 1 dəfəlikdir.</p></div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <h2 class="sec-title" data-i18n="cats.title">Kateqoriyalar</h2>
+    <div class="cats" id="catsPreview"></div>
+    <p class="hint center" data-i18n="cats.hint">Çarx yalnız hesaba daxil olduqdan sonra açılır.</p>
+  </section>
+
+  <section class="wrap cta">
+    <h2 data-i18n="cta.title">Sənə nə qismət olacaq?</h2>
+    <a class="btn big" id="ctaBtn" href="pricing.html" data-i18n="hero.cta2">İndi başla 🔮</a>
+  </section>
+</main>
+
+<footer class="ftr">
+  <div class="ftr-logo">Misterio</div>
+  <div>info@misterio.az · +994 70 562 12 69</div>
+  <div class="small">Bütün hüquqlar qorunur © 2026 Misterio</div>
+</footer>
+<script src="db.js"></script>
+<script src="auth.js"></script>
+<script src="data.js"></script>
+<script>
+const q=id=>document.getElementById(id);
+(async function(){
+/* kateqoriyalar Supabase-dəki şirkətlərlə birlikdə */
+await loadCompanies();
+const box=q("catsPreview");
+box.innerHTML="";
+Object.entries(DATA).forEach(([k,v])=>{
+  const d=document.createElement("a"); d.className="cat"+(v.isAll?" all":""); d.href="spin.html";
+  d.innerHTML=`<div class="ic">${v.icon}</div><div class="nm">${v.name}</div><div class="cnt">${v.shops.length} məkan</div>`;
+  box.appendChild(d);
+});
+
+/* istifadəçi statusuna görə ana səhifə */
+const u=await loadSession();
+if(u && u.verified){
+  const s=subInfo();
+  q("heroGuest").classList.add("hidden");
+  q("infoBlocks").classList.add("hidden");
+  q("heroUser").classList.remove("hidden");
+  q("uName").textContent=u.name||u.email;
+  q("sSpins").textContent=s.spinsLeft;
+  q("sSub").textContent=s.active?"Aktiv":"Deaktiv";
+  q("sSubIc").textContent=s.active?"✅":"🔒";
+  q("sRenew").textContent=s.active?s.renewText:"—";
+  const acts=q("uActions");
+  if(s.canSpin){
+    acts.innerHTML=`<a class="btn big" href="spin.html">Çarxı fırlat 🔮</a>
+                    <a class="btn ghost big" href="profile.html">Kuponlarım</a>`;
+    q("uHint").textContent=`Bu ay ${s.spinsLeft} fırlatma haqqın qalıb.`;
+  } else if(s.active){
+    acts.innerHTML=`<a class="btn big" href="pricing.html">Əlavə fırlatma al</a>
+                    <a class="btn ghost big" href="profile.html">Kuponlarım</a>`;
+    q("uHint").innerHTML=`⚠️ Bu ayki fırlatma haqqın bitib. Yeniləmə tarixi: <b>${s.renewText}</b>`;
+  } else {
+    acts.innerHTML=`<a class="btn big" href="pricing.html">Abunə ol — 9.90 AZN/ay</a>`;
+    q("uHint").textContent="Fırlatmaq üçün abunə olmalıdır.";
+  }
+  q("ctaBtn").textContent = s.canSpin ? "Çarxı fırlat 🔮" : "Abunəliyə bax";
+  q("ctaBtn").href = s.canSpin ? "spin.html" : "pricing.html";
+}
+})();
+</script>
+<footer style="text-align:center;padding:24px;color:#9f7aea;font-size:13px">
+</footer>
+</body>
+</html>

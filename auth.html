@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Giriş / Qeydiyyat — Misterio</title>
+<script src="theme.js"></script>
+<script src="analytics.js"></script>
+<script src="i18n.js?v=2"></script>
+<script src="nav.js"></script>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🎁</text></svg>">
+</head>
+<body>
+<header class="hdr">
+  <a class="logo" href="index.html">
+    <svg class="logo-svg" viewBox="0 0 240 240" width="38" height="38" aria-hidden="true">
+      <circle cx="120" cy="120" r="118" fill="#ffffff"/>
+      <circle cx="120" cy="120" r="118" fill="none" stroke="#e9d5ff" stroke-width="2"/>
+      <g fill="none" stroke="#2e1065">
+        <circle cx="120" cy="120" r="110" stroke-width="2.4"/>
+        <circle cx="120" cy="120" r="102" stroke-width="1.1"/>
+        <g stroke-width="1.1" opacity="0.5"><polygon points="120,54 154,131 86,131"/><polygon points="120,186 86,109 154,109"/></g>
+      </g>
+      <text x="120" y="130" fill="#2e1065" font-family="Georgia,serif" font-weight="700" font-size="30" text-anchor="middle">Misterio</text>
+    </svg>
+    <span class="logo-txt">Misterio</span>
+  </a>
+  <nav class="nav"><a href="pricing.html">Qiymət</a><a href="add-company.html">Şirkət əlavə et</a></nav>
+  <button class="theme-btn" onclick="toggleTheme()" aria-label="Tema">☀️</button>
+  <a class="avatar" href="profile.html" title="Profil">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round">
+      <circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+  </a>
+</header>
+
+<main>
+  <section class="wrap auth-wrap">
+
+    <div class="switcher" id="switcher">
+      <button class="sw-btn active" data-t="login" data-i18n="auth.loginBtn">Daxil ol</button>
+      <button class="sw-btn" data-t="signup" data-i18n="auth.signupBtn">Qeydiyyatdan keç</button>
+    </div>
+
+    <!-- SEKSİYA 1: DAXİL OL -->
+    <section class="auth-sec" id="secLogin">
+      <div class="card auth-card">
+        <div class="sec-head"><span class="sec-ic">🗝️</span><h2 data-i18n="auth.loginTitle">Daxil ol</h2></div>
+        <p class="sub">Səni nə gözlədiyini görmək üçün daxil ol.</p>
+        <form id="loginForm" class="form">
+          <label data-i18n="auth.email">Email<input id="lEmail" type="email" required placeholder="siz@mail.com"></label>
+          <label data-i18n="auth.password">Şifrə<input id="lPass" type="password" required placeholder="••••••••"></label>
+          <div class="err hidden" id="lErr"></div>
+          <button class="btn" type="submit" data-i18n="auth.loginBtn">Daxil ol</button>
+        </form>
+        <p class="swap-note" data-i18n="auth.noAccount">Hesabın yoxdur? <a href="#" class="link" data-go="signup">Qeydiyyatdan keç</a></p>
+      </div>
+    </section>
+
+    <!-- SEKSİYA 2: QEYDİYYAT -->
+    <section class="auth-sec hidden" id="secSignup">
+      <div class="card auth-card">
+        <div class="sec-head"><span class="sec-ic">🔮</span><h2 data-i18n="auth.signupTitle">Qeydiyyatdan keç</h2></div>
+        <p class="sub">Yeni hesab yarat və qazanmağa başla.</p>
+        <form id="signupForm" class="form">
+          <label data-i18n="auth.name">Ad Soyad<input id="sName" required placeholder="Kamal Ağayev"></label>
+          <label data-i18n="auth.email">Email<input id="sEmail" type="email" required placeholder="siz@mail.com"></label>
+          <label data-i18n="auth.phone">Telefon<input id="sPhone" placeholder="+994 __ ___ __ __"></label>
+          <label data-i18n="auth.password">Şifrə<input id="sPass" type="password" required minlength="8" placeholder="ən azı 8 simvol (hərf+rəqəm)"></label>
+          <label data-i18n="auth.password">Şifrə təkrar<input id="sPass2" type="password" required placeholder="••••••••"></label>
+          <div class="err hidden" id="sErr"></div>
+          <button class="btn" type="submit" data-i18n="auth.signupBtn">Qeydiyyatdan keç</button>
+        </form>
+        <p class="swap-note" data-i18n="auth.haveAccount">Hesabın var? <a href="#" class="link" data-go="login">Daxil ol</a></p>
+      </div>
+    </section>
+
+    <!-- SEKSİYA 3: DOĞRULAMA -->
+    <section class="auth-sec hidden" id="secVerify">
+      <div class="card auth-card center">
+        <div class="confetti">📧</div>
+        <h2 data-i18n="auth.verifyTitle">Email doğrulaması</h2>
+        <p class="sub" data-i18n="auth.verifyText"><span id="vEmail"></span> ünvanına 6 rəqəmli təsdiq kodu göndərildi.</p>
+        <div class="demo-mail"><b data-i18n="auth.resend">Demo rejimi:</b> real email göndərilmir. Kodunuz:
+          <span class="code-inline" id="vCode"></span></div>
+        <form class="form" id="verifyForm">
+          <label data-i18n="auth.verifyText">Təsdiq kodu<input id="vInput" inputmode="numeric" maxlength="6" placeholder="______" class="otp"></label>
+          <div class="err hidden" id="vErr"></div>
+          <button class="btn" type="submit" data-i18n="auth.verifyBtn">Təsdiqlə</button>
+          <button class="btn ghost" type="button" id="resend" data-i18n="auth.resend">Kodu yenidən göndər</button>
+        </form>
+      </div>
+    </section>
+
+  </section>
+</main>
+
+<footer class="ftr">
+  <div class="ftr-logo">Misterio</div>
+  <div>info@misterio.az · +994 70 562 12 69</div>
+  <div class="small">Bütün hüquqlar qorunur © 2026 Misterio</div>
+</footer>
+<script src="db.js"></script>
+<script src="auth.js"></script>
+<script>
+const q=id=>document.getElementById(id);
+const params=new URLSearchParams(location.search);
+const next=params.get("next")||"index.html";
+
+function showSec(name){
+  ["secLogin","secSignup","secVerify"].forEach(s=>q(s).classList.add("hidden"));
+  q(name).classList.remove("hidden");
+  const isVerify = name==="secVerify";
+  q("switcher").classList.toggle("hidden", isVerify);
+  if(!isVerify){
+    const t = name==="secLogin" ? "login" : "signup";
+    document.querySelectorAll(".sw-btn").forEach(b=>b.classList.toggle("active",b.dataset.t===t));
+  }
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+document.querySelectorAll(".sw-btn").forEach(b=>b.onclick=()=>showSec(b.dataset.t==="login"?"secLogin":"secSignup"));
+document.querySelectorAll("[data-go]").forEach(a=>a.onclick=e=>{
+  e.preventDefault(); showSec(a.dataset.go==="login"?"secLogin":"secSignup");
+});
+if(params.get("tab")==="signup") showSec("secSignup");
+
+const err=(el,m)=>{el.textContent=m;el.classList.remove("hidden")};
+const hide=el=>el.classList.add("hidden");
+
+/* artıq daxil olubsa yönləndir */
+(async()=>{
+  const u = await loadSession();
+  if(u && u.verified) location.href=next;
+})();
+
+q("signupForm").onsubmit=async e=>{
+  e.preventDefault(); hide(q("sErr"));
+  const btn=e.target.querySelector("button[type=submit]"); btn.disabled=true;
+  try{
+    const email=q("sEmail").value.trim().toLowerCase();
+    if(!/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(email)) return err(q("sErr"),"Email formatı düzgün deyil.");
+    if(q("sPass").value!==q("sPass2").value) return err(q("sErr"),"Şifrələr uyğun gəlmir.");
+    if(q("sPass").value.length<8) return err(q("sErr"),"Şifrə ən azı 8 simvol olmalıdır.");
+    const r = await DB.register({
+      name:q("sName").value.trim(), email,
+      phone:q("sPhone").value.trim(), password:q("sPass").value
+    });
+    MA.qeydiyyat(email);
+    q("vEmail").textContent=email;
+    // Demo rejim: email getməyibsə kodu birbaşa ekrana qaytar
+    q("vCode").textContent = r.devCode
+      ? "🔑 Demo kodunuz: " + r.devCode + " (emailə göndərilmədi)"
+      : "✉️ Kod email ünvanına göndərildi (" + email + ")";
+    showSec("secVerify");
+    q("signupForm").dataset.email=email;
+  }catch(ex){ err(q("sErr"), ex.message); }
+  finally{ btn.disabled=false; }
+};
+
+q("loginForm").onsubmit=async e=>{
+  e.preventDefault(); hide(q("lErr"));
+  const btn=e.target.querySelector("button[type=submit]"); btn.disabled=true;
+  try{
+    const r = await DB.login(q("lEmail").value.trim(), q("lPass").value);
+    MA.giris();
+    Session.login(r.user);
+    location.href=next;
+  }catch(ex){ err(q("lErr"), ex.message); }
+  finally{ btn.disabled=false; }
+};
+
+q("verifyForm").onsubmit=async e=>{
+  e.preventDefault(); hide(q("vErr"));
+  const email = q("signupForm").dataset.email || q("vEmail").textContent;
+  try{
+    const r = await DB.verify(email, q("vInput").value.trim());
+    MA.dogrulandi();
+    Session.login(r.user);
+    location.href = "spin.html";
+  }catch(ex){ err(q("vErr"), ex.message); }
+};
+
+q("resend").onclick=async()=>{
+  const email = q("signupForm").dataset.email || q("vEmail").textContent;
+  try{
+    const r = await DB.resend(email);
+    q("vCode").textContent = (r.devCode)
+      ? "🔑 Yeni demo kodunuz: " + r.devCode
+      : (r.emailSent ? "✉️ Yeni kod emailə göndərildi" : "⚠️ Kod göndərilmədi, yenidən yoxlayın");
+  }catch(ex){ err(q("vErr"), ex.message); }
+};
+</script>
+<footer style="text-align:center;padding:24px;color:#9f7aea;font-size:13px">
+</footer>
+</body>
+</html>

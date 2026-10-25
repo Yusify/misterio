@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Qiymət — Misterio</title>
+<script src="theme.js"></script>
+<script src="analytics.js"></script>
+<script src="i18n.js?v=2"></script>
+<script src="nav.js"></script>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🎁</text></svg>">
+</head>
+<body>
+<header class="hdr">
+  <a class="logo" href="index.html">
+    <svg class="logo-svg" viewBox="0 0 240 240" width="38" height="38" aria-hidden="true">
+      <circle cx="120" cy="120" r="118" fill="#ffffff"/>
+      <circle cx="120" cy="120" r="118" fill="none" stroke="#e9d5ff" stroke-width="2"/>
+      <g fill="none" stroke="#2e1065">
+        <circle cx="120" cy="120" r="110" stroke-width="2.4"/>
+        <circle cx="120" cy="120" r="102" stroke-width="1.1"/>
+        <g stroke-width="1.1" opacity="0.5"><polygon points="120,54 154,131 86,131"/><polygon points="120,186 86,109 154,109"/></g>
+      </g>
+      <text x="120" y="130" fill="#2e1065" font-family="Georgia,serif" font-weight="700" font-size="30" text-anchor="middle">Misterio</text>
+    </svg>
+    <span class="logo-txt">Misterio</span>
+  </a>
+  <nav class="nav"><a href="pricing.html" class="on">Qiymət</a><a href="add-company.html">Şirkət əlavə et</a></nav>
+  <button class="theme-btn" onclick="toggleTheme()" aria-label="Tema">☀️</button>
+  <a class="avatar" href="profile.html" title="Profil">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round">
+      <circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+  </a>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="badge" id="welcomeBadge" data-i18n="pricing.newBadge">🔮 Yeni gələnlər üçün fürsət</div>
+    <h1 data-i18n="pricing.heroTitle">Hər ay <span class="grad">3 sürpriz şans</span></h1>
+    <p class="lead" data-i18n="pricing.heroLead">İndi qoşul, ilk fırlatmanı elə bu gün et. Çarxın arxasında Bakının ən yaxşı restoran, kafe,
+       kurs və co-working məkanları gizlənir — hansı sənə düşəcək, bilinmir.</p>
+  </section>
+
+  <section class="wrap">
+    <div class="price-wrap">
+      <div class="price-card">
+        <div class="pc-tag" data-i18n="pricing.popular">ƏN POPULYAR</div>
+        <div class="pc-name" data-i18n="pricing.planName">Misterio Aylıq</div>
+        <div class="pc-price"><span class="pc-num" id="subNum">9.90</span><span class="pc-cur" id="subCur">AZN</span><span class="pc-per" id="subPer" data-i18n="pricing.perMonth">/ay</span></div>
+        <div class="pc-sub" data-i18n="pricing.recurring">aylıq təkrarlanan ödəniş</div>
+        <ul class="pc-list">
+          <li data-i18n="pricing.perk1">✦ <b>Ayda 3 sürpriz fırlatma</b></li>
+          <li data-i18n="pricing.perk2">✦ Bütün kateqoriyalara giriş (Restoran, Coffeeshop, Kurslar, Co-working, Anticafe, Kitab)</li>
+          <li data-i18n="pricing.perk3">✦ "Hamısı" çarxı — bütün məkanlar bir çarxda</li>
+          <li data-i18n="pricing.perk4">✦ Qazandığın kuponlar profilində saxlanılır</li>
+          <li data-i18n="pricing.perk5">✦ 10%-dən 40%-ə qədər endirimlər</li>
+          <li data-i18n="pricing.perk6">✦ İstədiyin vaxt ləğv edə bilərsən</li>
+        </ul>
+        <button class="btn big full" id="subBtn" data-i18n="pricing.cta">İndi qoşul və qazanmağa başla 🔮</button>
+        <p class="pc-note" id="subNote" data-i18n="pricing.note">Free trial yoxdur — abunəlik dərhal aktivləşir.</p>
+      </div>
+
+      <div class="price-side">
+        <div class="card info"><h3 data-i18n="pricing.whyTitle">🔮 Niyə Misterio?</h3>
+          <p data-i18n="pricing.whyDesc">Adi endirim saytlarında nə alacağını əvvəlcədən bilirsən. Burada isə hər fırlatma bir sürprizdir —
+             və çox vaxt gözlədiyindən daha yaxşı çıxır.</p></div>
+        <div class="card info"><h3 data-i18n="pricing.couponTitle">💸 Bir kupon abunəliyi ödəyir</h3>
+          <p data-i18n="pricing.couponDesc">Orta hesabla bir restoran endirimi 15-30 AZN qənaət deməkdir. Ayda 3 kupon — abunəlik özünü ilk gün çıxarır.</p></div>
+        <div class="card info"><h3 data-i18n="pricing.cancelTitle">🔁 Ləğvetmə şərtləri</h3>
+          <p data-i18n="pricing.cancelDesc">Abunəlik hər ay avtomatik yenilənir. Profil səhifəsindən bir kliklə ləğv edə bilərsən —
+             ləğv etdikdə cari dövrün sonuna qədər fırlatmaların qalır, sonrakı ay ödəniş alınmır.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <h2 class="sec-title" data-i18n="pricing.extraTitle">Əlavə fırlatma lazımdır?</h2>
+    <div class="card extra-card">
+      <div>
+        <h3 data-i18n="pricing.extraName">Tək fırlatma</h3>
+        <p class="sub" data-i18n="pricing.extraDesc">Bu ayki 3 fırlatman bitibsə, növbəti ayı gözləmədən əlavə şans ala bilərsən.</p>
+      </div>
+      <div class="extra-right">
+        <div class="extra-price" id="extraPrice">4.90 AZN</div>
+        <button class="btn" id="extraBtn" data-i18n="pricing.extraBtn">Əlavə fırlatma al</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <h2 class="sec-title" data-i18n="pricing.faqTitle">Tez-tez verilən suallar</h2>
+    <div class="faq">
+      <details><summary data-i18n="pricing.faq1q">Free trial varmı?</summary><p data-i18n="pricing.faq1a">Xeyr. Xidmət ödənişlidir — qeydiyyatdan sonra abunə olmaq lazımdır.</p></details>
+      <details><summary data-i18n="pricing.faq2q">3 fırlatma bitəndə nə olur?</summary><p data-i18n="pricing.faq2a">Növbəti ay avtomatik yenilənənə qədər çarx bağlanır. Yeniləmə tarixi profilində və ana səhifədə göstərilir. İstəsən əlavə fırlatma ala bilərsən.</p></details>
+      <details><summary data-i18n="pricing.faq3q">Kuponlar nə qədər etibarlıdır?</summary><p data-i18n="pricing.faq3a">Hər kupon 1 dəfəlikdir və qazanıldığı tarixdən etibarən 30 gün ərzində istifadə edilməlidir.</p></details>
+      <details><summary data-i18n="pricing.faq4q">Necə ləğv edim?</summary><p data-i18n="pricing.faq4a">Profil → Abunəlik → "Abunəliyi ləğv et". Növbəti ay ödəniş alınmır.</p></details>
+    </div>
+  </section>
+</main>
+
+<div class="modal hidden" id="payModal">
+  <div class="modal-card">
+    <div class="confetti">💳</div>
+    <h3 id="payTitle">Abunəliyi aktivləşdir</h3>
+    <p class="win" id="payAmount">9.90 AZN</p>
+    <p class="sub" id="paySub">Aylıq təkrarlanan ödəniş. Nümunə axın — real ödəniş alınmır.</p>
+    <div class="pay-fake">
+      <div class="pay-row"><span>Kart nömrəsi</span><input id="payCard" inputmode="numeric" maxlength="19" placeholder="**** **** **** 4242" style="background:rgba(0,0,0,.25);border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:6px 10px;width:160px;text-align:right;font-family:monospace"></div>
+      <div class="pay-row"><span>Məbləğ</span><b id="payAmountRow">9.90 AZN</b></div>
+      <div class="pay-row"><span>Dövr</span><b id="payPeriod">Aylıq</b></div>
+      <div class="pay-row"><span>Hesab</span><b id="payAcc">—</b></div>
+    </div>
+    <div class="row">
+      <button class="btn ghost" id="payCancel">İmtina</button>
+      <button class="btn" id="payGo">Ödənişi təsdiqlə</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal hidden" id="okModal">
+  <div class="modal-card">
+    <div class="confetti">🎉</div>
+    <h3>Abunəliyin aktivdir!</h3>
+    <p class="win" id="okSpins">3 fırlatma</p>
+    <p class="sub" id="okRenew"></p>
+    <div class="row">
+      <a class="btn" href="spin.html">Çarxı fırlat 🔮</a>
+      <a class="btn ghost" href="profile.html">Profilim</a>
+    </div>
+  </div>
+</div>
+
+<footer class="ftr">
+  <div class="ftr-logo">Misterio</div>
+  <div>info@misterio.az · +994 70 562 12 69</div>
+  <div class="small">Bütün hüquqlar qorunur © 2026 Misterio</div>
+</footer>
+<script src="db.js"></script>
+<script src="auth.js"></script>
+<script>
+const q=id=>document.getElementById(id);
+let mode="sub";
+
+function render(){
+  const u=Session.user();
+  if(!u||!u.verified){
+    q("subNote").textContent="Abunə olmaq üçün aşağıdakı düyməni basın və kart məlumatınızı daxil edin.";
+    return;
+  }
+  const s=subInfo();
+  q("payAcc").textContent=u.email;
+  if(s.active){
+    q("subBtn").outerHTML='<div class="active-badge">✅ Abunəliyin aktivdir</div>';
+    q("subNote").innerHTML=`Qalan fırlatma: <b>${s.spinsLeft}</b> · Yenilənmə: <b>${s.renewText}</b>`;
+  }
+}
+MA.qiymetBaxdi();
+(function(){ try{ updatePrices(); I18N.apply(); }catch(e){ console.warn(e); } })();
+(async()=>{ try{ await loadSession(); render(); }catch(e){ console.warn(e); } })();
+
+function updatePrices(){
+  q("subNum").textContent="9.90";
+  q("subCur").textContent="AZN";
+  q("extraPrice").textContent="4.90 AZN";
+}
+function openPay(m){
+  mode=m;
+  q("payAcc").textContent = (Session.user() && Session.user().email) || "demo@misterio.az";
+  MA.odenisAcdi(m);
+  q("payTitle").textContent = I18N.t(m==="sub" ? "pay.title.sub" : "pay.title.extra");
+  q("payPeriod").textContent = I18N.t(m==="sub" ? "pay.period.sub" : "pay.period.extra");
+  const amt=(m==="sub"?"9.90":"4.90")+" AZN";
+  q("payAmount").textContent = amt;
+  q("payAmountRow").textContent = amt;
+  q("paySub").textContent = m==="sub"
+    ? "Aylıq təkrarlanan ödəniş. Kart nömrənizi daxil edin — ödəniş təsdiqləndikdə abunə aktiv olur."
+    : "Birdəfəlik ödəniş, hesabınıza +1 fırlatma əlavə olunur.";
+  q("payModal").classList.remove("hidden");
+}
+q("subBtn").onclick=()=>openPay("sub");
+q("extraBtn").onclick=()=>openPay("extra");
+q("payCancel").onclick=()=>q("payModal").classList.add("hidden");
+q("payGo").onclick=async()=>{
+  const card = (q("payCard").value || "").trim();
+  if(mode==="sub" && card.replace(/\s+/g,"").length < 12){
+    alert("Abunə üçün kart nömrəsini daxil edin.");
+    return;
+  }
+  q("payModal").classList.add("hidden");
+  try {
+    if(mode==="sub"){
+      // kart məlumatı ilə ödəniş yaradıb abunəni aktiv et
+      const r = await DB.payment("sub", card);
+      if(r && r.activated){ CURRENT_USER = r.user || CURRENT_USER; }
+      else { console.warn("payment not activated"); }
+      await loadSession();
+    }
+    else { await buyExtraSpin(); }
+  } catch(e){ console.warn("payment:", e.message); }
+  const s=subInfo() || { spinsLeft: 3, renewText: "—" };
+  q("okSpins").textContent = (s.spinsLeft || 3) + " fırlatma səni gözləyir";
+  q("okRenew").textContent = "Növbəti yenilənmə: " + (s.renewText || "—");
+  q("okModal").classList.remove("hidden");
+  render();
+};
+if(new URLSearchParams(location.search).get("welcome"))
+  q("welcomeBadge").textContent="✅ Hesabın təsdiqləndi — indi abunə ol";
+</script>
+<footer style="text-align:center;padding:24px;color:#9f7aea;font-size:13px">
+</footer>
+</body>
+</html>

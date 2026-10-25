@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Şirkət əlavə et — Misterio</title>
+<script src="theme.js"></script>
+<script src="analytics.js"></script>
+<script src="i18n.js?v=2"></script>
+<script src="nav.js"></script>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🎁</text></svg>">
+</head>
+<body>
+<header class="hdr">
+  <a class="logo" href="index.html">
+    <svg class="logo-svg" viewBox="0 0 240 240" width="38" height="38" aria-hidden="true">
+      <circle cx="120" cy="120" r="118" fill="#ffffff"/>
+      <circle cx="120" cy="120" r="118" fill="none" stroke="#e9d5ff" stroke-width="2"/>
+      <g fill="none" stroke="#2e1065">
+        <circle cx="120" cy="120" r="110" stroke-width="2.4"/>
+        <circle cx="120" cy="120" r="102" stroke-width="1.1"/>
+        <g stroke-width="1.1" opacity="0.5"><polygon points="120,54 154,131 86,131"/><polygon points="120,186 86,109 154,109"/></g>
+      </g>
+      <text x="120" y="130" fill="#2e1065" font-family="Georgia,serif" font-weight="700" font-size="30" text-anchor="middle">Misterio</text>
+    </svg>
+    <span class="logo-txt">Misterio</span>
+  </a>
+  <nav class="nav"><a href="pricing.html">Qiymət</a><a href="add-company.html" class="on">Şirkət əlavə et</a></nav>
+  <button class="theme-btn" onclick="toggleTheme()" aria-label="Tema">☀️</button>
+  <a class="avatar" href="profile.html" title="Profil">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round">
+      <circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+  </a>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="badge">🤝 Tərəfdaş ol</div>
+    <h1>Şirkətini <span class="grad">çarxa əlavə et</span></h1>
+    <p class="lead">Məkanını Misterio çarxına əlavə et — istifadəçilər sənin endirimini qazanıb birbaşa qapından girsin. Qeydiyyat zamanı onlayn müqavilə avtomatik imzalanır.</p>
+  </section>
+
+  <section class="wrap">
+    <div class="add-grid">
+      <form class="card form" id="compForm">
+        <h3 class="sec-title">Şirkət məlumatları</h3>
+        <label>Şirkət / restoran adı *
+          <input id="cName" required maxlength="28" placeholder="məs. Dolma House"></label>
+        <label>Kateqoriya *
+          <select id="cCat" required></select></label>
+        <label>Ünvan *
+          <input id="cAddr" required maxlength="120" placeholder="məs. Bakı ş., Nizami küç. 12"></label>
+        <label>Tərəfdaşın adı və soyadı (imza üçün) *
+          <input id="cSign" required maxlength="60" placeholder="məs. Əli Məmmədov"></label>
+        <label>Endirim faizi (%) *
+          <input id="cDisc" type="number" min="5" max="90" required placeholder="məs. 20"></label>
+        <label>Əlaqə nömrəsi *
+          <input id="cPhone" required placeholder="+994 __ ___ __ __"></label>
+        <label>Admin paneli üçün email *
+          <input id="cEmail" type="email" required placeholder="restoran@mail.az"></label>
+        <label>Admin paneli şifrəsi *
+          <input id="cPass" type="password" required minlength="8" placeholder="ən azı 8 simvol (hərf+rəqəm)"></label>
+        <div class="err hidden" id="cErr"></div>
+        <button class="btn" type="submit">Davam et → Müqavilə</button>
+      </form>
+
+      <div class="side-col">
+        <div class="card info"><h3>ℹ️ Necə işləyir?</h3>
+          <p>1) Məlumatları doldur → 2) Onlayn müqaviləni oxu və "razıyam" de → 3) Sistem müqaviləni imzalayır, PDF yaradır və şirkəti çarxa əlavə edir. Sənə əlavə olaraq heç nə etmək lazım deyil.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- MÜQAVİLƏ MODALI -->
+<div class="modal hidden" id="contractModal">
+  <div class="modal-card" style="max-width:560px">
+    <div class="sec-ic" style="text-align:center">📝</div>
+    <h3>Misterio Tərəfdaşlıq Müqaviləsi</h3>
+    <p class="sub" style="text-align:center">Hüquqi şəxs və ya Fiziki şəxs üçün tərəfdaşlıq şərtləri</p>
+    <div id="contractText" class="contract-text"></div>
+    <label class="contract-check">
+      <input type="checkbox" id="agreeChk">
+      <span>Mən yuxarıdakı müqaviləni oxudum, başa düşdüm və şərtlərlə <b>razıyam</b>.</span>
+    </label>
+    <div class="err hidden" id="contractErr"></div>
+    <div class="row" style="margin-top:18px">
+      <button class="btn ghost" id="contractCancel" type="button">İmtina</button>
+      <button class="btn" id="signBtn" type="button" disabled>✍️ Oxudum, razıyam — İmzala</button>
+    </div>
+  </div>
+</div>
+
+<!-- UĞUR MODALI -->
+<div class="modal hidden" id="okModal">
+  <div class="modal-card">
+    <div class="confetti">✅</div>
+    <h3>Şirkət əlavə olundu və müqavilə imzalandı!</h3>
+    <p class="win" id="okTxt"></p>
+    <p class="sub" id="okSub"></p>
+    <div class="contract-meta" id="okMeta"></div>
+    <div class="row">
+      <button class="btn ghost" id="okMore">Daha bir şirkət</button>
+      <button class="btn ghost" id="dlPdf">📄 Müqavilə PDF</button>
+      <a class="btn" href="spin.html">Çarxda gör 🎡</a>
+    </div>
+  </div>
+</div>
+
+<footer class="ftr">
+  <div class="ftr-logo">Misterio</div>
+  <div>info@misterio.az · +994 70 562 12 69</div>
+  <div class="small">Bütün hüquqlar qorunur © 2026 Misterio</div>
+</footer>
+<script src="db.js"></script>
+<script src="auth.js"></script>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

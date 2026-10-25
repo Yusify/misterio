@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Şirkət Admin Paneli — Giriş · Misterio</title>
+<script src="theme.js"></script>
+<script src="analytics.js"></script>
+<script src="i18n.js?v=2"></script>
+<script src="nav.js"></script>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="admin.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🎁</text></svg>">
+</head>
+<body>
+<header class="hdr">
+  <a class="logo" href="index.html">
+    <svg class="logo-svg" viewBox="0 0 240 240" width="38" height="38" aria-hidden="true">
+      <circle cx="120" cy="120" r="118" fill="#ffffff"/>
+      <circle cx="120" cy="120" r="118" fill="none" stroke="#e9d5ff" stroke-width="2"/>
+      <g fill="none" stroke="#2e1065">
+        <circle cx="120" cy="120" r="110" stroke-width="2.4"/>
+        <circle cx="120" cy="120" r="102" stroke-width="1.1"/>
+        <g stroke-width="1.1" opacity="0.5"><polygon points="120,54 154,131 86,131"/><polygon points="120,186 86,109 154,109"/></g>
+      </g>
+      <text x="120" y="130" fill="#2e1065" font-family="Georgia,serif" font-weight="700" font-size="30" text-anchor="middle">Misterio</text>
+    </svg>
+    <span class="logo-txt">Misterio</span>
+  </a>
+  <span class="admin-tag">⚙️ Şirkət Paneli</span>
+  <button class="theme-btn" onclick="toggleTheme()" aria-label="Tema">☀️</button>
+</header>
+
+<main>
+  <section class="admin-login wrap">
+    <div class="al-card card">
+      <div class="sec-head"><span class="sec-ic">🔐</span><h2>Şirkət hesabına daxil ol</h2></div>
+      <p class="sub">Restoran / mağaza sahibləri üçün admin paneli. Kuponları skan et, gəlirlərini izlə.</p>
+
+      <form id="adminForm" class="form">
+        <label>İstifadəçi adı və ya email
+          <input id="aUser" autocomplete="username" required placeholder="info@misterio.az"></label>
+        <label>Şifrə
+          <input id="aPass" type="password" autocomplete="current-password" required placeholder="••••••••"></label>
+        <div class="err hidden" id="aErr"></div>
+        <button class="btn big full" type="submit">Daxil ol</button>
+      </form>
+
+      <div class="demo-box">
+        <div class="demo-title">🧪 Demo hesablar (nümunə)</div>
+        <div class="demo-row" data-u="info@misterio.az" data-p="misterio1104">
+          <span><b>info@misterio.az</b> · misterio1104</span><span class="demo-fill">← doldur</span>
+        </div>
+        <div class="demo-row" data-u="dolma@restoran.az" data-p="dolma1104">
+          <span><b>dolma@restoran.az</b> · dolma1104</span><span class="demo-fill">← doldur</span>
+        </div>
+        <div class="demo-row" data-u="brew@coffee.az" data-p="brew1104">
+          <span><b>brew@coffee.az</b> · brew1104</span><span class="demo-fill">← doldur</span>
+        </div>
+      </div>
+    </div>
+    <p class="hint center"><a class="link" href="index.html">← Əsas sayta qayıt</a></p>
+  </section>
+</main>
+
+<footer class="ftr">
+  <div class="ftr-logo">Misterio</div>
+  <div>info@misterio.az · +994 70 562 12 69</div>
+  <div class="small">Bütün hüquqlar qorunur © 2026 Misterio</div>
+</footer>
+
+<script src="db.js"></script>
+<script src="admin.js"></script>
+<script>
+const q=id=>document.getElementById(id);
+const errEl=q("aErr");
+function showErr(m){ errEl.textContent=m; errEl.classList.remove("hidden"); }
+function hideErr(){ errEl.classList.add("hidden"); }
+
+/* demo düymələri ilə sahələri doldur */
+document.querySelectorAll(".demo-row").forEach(r=>{
+  r.onclick=()=>{ q("aUser").value=r.dataset.u; q("aPass").value=r.dataset.p; hideErr(); };
+});
+
+q("adminForm").onsubmit=async e=>{
+  e.preventDefault(); hideErr();
+  const btn=e.target.querySelector("button[type=submit]"); btn.disabled=true;
+  try{
+    const u=q("aUser").value.trim().toLowerCase();
+    const p=q("aPass").value;
+    const ok=await adminLogin(u,p);
+    if(!ok){ showErr("İstifadəçi adı və ya şifrə yanlışdır."); return; }
+    MA.adminGiris();
+    location.href="admin.html";
+  } finally { btn.disabled=false; }
+};
+</script>
+<footer style="text-align:center;padding:24px;color:#9f7aea;font-size:13px">
+</footer>
+</body>
+</html>
